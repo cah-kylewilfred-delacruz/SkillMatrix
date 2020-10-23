@@ -1,0 +1,58 @@
+﻿<Window x:Class="Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SkillMatrix"
+        mc:Ignorable="d"
+        Title="Window2" Height="450" Width="800" Background="#FF9E6464">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*" />
+            <RowDefinition Height="50" />
+
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Width="Auto" >
+            <StackPanel Orientation="Vertical" Margin=" 2,2,0,0" x:Name="stpComm" Width="130"  >
+                <Label Content="Commecial" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ListBox x:Name="lstComm">
+                    <CheckBox Height="20" Content="Test1" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+                </ListBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin=" 2,2,0,0" x:Name="stpGov" Width="130"  >
+                <Label Content="Government" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ListBox x:Name="lstGov">
+                    <CheckBox Height="20" Content="Test1" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+                </ListBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin=" 2,2,0,0"  x:Name="stpDCS" Width="130"  >
+                <Label Content="DCS" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ListBox x:Name="lstDCS">
+                    <CheckBox Height="20" Content="Test1" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+                </ListBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin=" 2,2,0,0" x:Name="stpSpecial" Width="130"  >
+                <Label Content="Speciallity" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <ListBox x:Name="lstSpecial">
+                    <CheckBox Height="20" Content="Test1" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+                </ListBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin=" 2,2,0,0" x:Name="stpRouter" Width="130"  >
+                <Label Content="Router" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <ListBox x:Name="lstRouter">
+                    <CheckBox Height="20" Content="Test1" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Button Grid.Row="1" x:Name="btnSave" Width="100" Height="25" Content="Save" HorizontalAlignment="Left">
+
+        </Button>
+
+        <CheckBox Grid.Row="1" Height="20" Name="tab2ChkComercial" Margin="120,0,0,0" Content="Commercial" FontSize="10"  VerticalContentAlignment="Center"    BorderThickness="0.5"  BorderBrush="Gray" Padding="2" Width="110" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" Foreground="Black"  />
+
+    </Grid>
+</Window>
