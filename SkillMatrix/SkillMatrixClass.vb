@@ -185,7 +185,7 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillViewInfo] WHERE [TeamId]=" & _seg & " ORDER BY [EmpName];", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillViewInfo] WHERE [TeamId]=" & _seg & " ORDER BY [Name];", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -225,7 +225,9 @@ Public Class SkillMatrixClass
 
 
         End If
-
+        If temp.Columns(0).ColumnName = "TeamId" Then
+            temp.Columns.Remove("TeamId")
+        End If
 
 
 
@@ -441,11 +443,18 @@ Public Class SkillMatrixClass
 
                 While dr.Read
 
+
+                    temp.BackOffice = If(IsNothing(dr.Item("BackOffice")), 0, dr.Item("BackOffice"))
+                    temp.CHI = If(IsNothing(dr.Item("CHI")), 0, dr.Item("CHI"))
+                    temp.Concierge = If(IsNothing(dr.Item("Concierge")), 0, dr.Item("Concierge"))
                     temp.Commercial = If(IsNothing(dr.Item("Commercial")), 0, dr.Item("Commercial"))
-                    temp.DCS = If(IsNothing(dr.Item("DCS")), 0, dr.Item("DCS"))
-                    temp.GoV = If(IsNothing(dr.Item("GoV")), 0, dr.Item("GoV"))
-                    temp.Speciality = If(IsNothing(dr.Item("Speciality")), 0, dr.Item("Speciality"))
+                    temp.GOV = If(IsNothing(dr.Item("GOV")), 0, dr.Item("GOV"))
+                    temp.IDNC = If(IsNothing(dr.Item("IDNC")), 0, dr.Item("IDNC"))
+                    temp.Kaiser = If(IsNothing(dr.Item("Kaiser")), 0, dr.Item("Kaiser"))
                     temp.Router = If(IsNothing(dr.Item("Router")), 0, dr.Item("Router"))
+                    temp.SalesSupport = If(IsNothing(dr.Item("SalesSupport")), 0, dr.Item("SalesSupport"))
+                    temp.Specialty = If(IsNothing(dr.Item("Specialty")), 0, dr.Item("Specialty"))
+                    temp.Tradex = If(IsNothing(dr.Item("Tradex")), 0, dr.Item("Tradex"))
 
                 End While
 
@@ -653,12 +662,19 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.Clear()
             Me.gridMainDbCommand.Parameters.AddWithValue("@EmpNo", _temp.EmpNo)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOffice", _temp.BackOffice)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@CHI", _temp.CHI)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Concierge", _temp.Concierge)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Commercial", _temp.Commercial)
             Me.gridMainDbCommand.Parameters.AddWithValue("@DCS", _temp.DCS)
-            Me.gridMainDbCommand.Parameters.AddWithValue("@GoV", _temp.GoV)
-            Me.gridMainDbCommand.Parameters.AddWithValue("@Speciality", _temp.Speciality)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@GOV", _temp.GOV)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@IDNC", _temp.IDNC)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Kaiser", _temp.Kaiser)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Router", _temp.Router)
-            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOffice", _temp.BackOffice)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@SalesSupport", _temp.SalesSupport)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Specialty", _temp.Specialty)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Tradex", _temp.Tradex)
+
 
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ModifiedDate", Now.ToString)
@@ -674,9 +690,9 @@ Public Class SkillMatrixClass
             Dim dr As SqlDataReader = gridMainDbCommand.ExecuteReader
 
             If dr.Read Then
-                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMHomeSkill] SET Commercial=@Commercial,DCS=@DCS,GoV=@GoV,Speciality=@Speciality,Router=@Router,BackOffice=@BackOffice,ModifiedDate=@ModifiedDate,ModifiedBy=@ModifiedBy WHERE EmpNo=@EmpNo;"
+                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMHomeSkill] SET BackOffice=@BackOffice,CHI=@CHI,Concierge=@Concierge,Commercial=@Commercial,DCS=@DCS,GOV=@GOV,IDNC=@IDNC,Kaiser=@Kaiser,Router=@Router,SalesSupport=@SalesSupport,Specialty=@Specialty,Tradex=@Tradex,        ModifiedDate=@ModifiedDate,ModifiedBy=@ModifiedBy WHERE EmpNo=@EmpNo;"
             Else
-                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMHomeSkill] ([EmpNo],[Commercial],[DCS],[GoV],[Speciality],[Router],[BackOffice],[ModifiedBy],[ModifiedDate]) VALUES (@EmpNo,@Commercial,@DCS,@GoV,@Speciality,@Router,@BackOffice,@ModifiedBy,@ModifiedDate)"
+                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMHomeSkill] ([EmpNo],[Commercial],[DCS],[GOV],[Specialty],[Router],[BackOffice],[CHI],[Concierge],[IDNC],[Kaiser],[SalesSupport],[Tradex],[ModifiedBy],[ModifiedDate]) VALUES (@EmpNo,@Commercial,@DCS,@GOV,@Specialty,@Router,@BackOffice,@CHI,@Concierge,@IDNC,@Kaiser,@SalesSupport,@Tradex,@ModifiedBy,@ModifiedDate)"
 
 
             End If
@@ -685,7 +701,7 @@ Public Class SkillMatrixClass
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
                     temp = True
-                    gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMHomeSkillLog] ([EmpNo],[Commercial],[DCS],[GoV],[Speciality],[Router],[BackOffice],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@Commercial,@DCS,@GoV,@Speciality,@Router,@BackOffice,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
+                    gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMHomeSkillLog] ([EmpNo],[Commercial],[DCS],[GOV],[Specialty],[Router],[BackOffice],[CHI],[Concierge],[IDNC],[Kaiser],[SalesSupport],[Tradex],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@Commercial,@DCS,@GOV,@Specialty,@Router,@BackOffice,@CHI,@Concierge,@IDNC,@Kaiser,@SalesSupport,@Tradex,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
                     Me.gridMainDbCommand.ExecuteNonQuery()
                 End If
             Catch ex As Exception
@@ -812,6 +828,60 @@ Public Class SkillMatrixClass
     End Function
 
 
+    'SAVE PER LOG'
+    Public Function SaveCFLog(ByVal _temp As CoreFunctionInfo, ByVal _Id As Integer) As Boolean
+        Dim temp As Boolean
+        If OpenMainDbConnection() Then
+
+
+
+
+            Me.gridMainDbCommand.Parameters.Clear()
+            Me.gridMainDbCommand.Parameters.AddWithValue("@EmpNo", _temp.EmpNo)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@OrderProcess", _temp.OrderProcess)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Credit", _temp.Credit)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Rebill", _temp.Rebill)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Returns", _temp.Returns)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Complaints", _temp.Complaints)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ShippingDiscrepancy", _temp.ShippingDiscrepancy)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@DocumentRequests", _temp.DocumentRequests)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@PricingProduct", _temp.PricingProduct)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Implementation", _temp.Implementation)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ValueLinkTrained", _temp.ValueLinkTrained)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Comment", _temp.Comment)
+
+
+
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
+
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Date.Now)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
+
+
+            gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunction] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,ValueLinkTrained=@ValueLinkTrained,ModifiedDate=@ModifiedDate,Comment=@Comment WHERE EmpNo=@EmpNo;"
+
+            Try
+                If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
+                    temp = True
+                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunctionLog] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,ValueLinkTrained=@ValueLinkTrained,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Action=@Action WHERE Id=" & _Id & ";"
+                    Me.gridMainDbCommand.ExecuteNonQuery()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+
+            Me.CloseMainDbConnection()
+
+
+
+        Else
+            MsgBox("Failed to open main database. Please check you connection.")
+        End If
+
+
+
+        Return temp
+    End Function
     Public Function SaveReviewedLog(ByVal _temp As CoreFunctionInfo) As Boolean
         Dim temp As Boolean
         If OpenMainDbConnection() Then
@@ -1115,12 +1185,22 @@ Public Class HomeSkillInfo
 
 
     Public Property EmpNo As Integer
+    Public Property BackOffice As Boolean
+    Public Property CHI As Boolean
+    Public Property Concierge As Boolean
     Public Property Commercial As Boolean
     Public Property DCS As Boolean
-    Public Property GoV As Boolean
-    Public Property Speciality As Boolean
-    Public Property BackOffice As Boolean
+    Public Property GOV As Boolean
+    Public Property IDNC As Boolean
+    Public Property Kaiser As Boolean
     Public Property Router As Boolean
+    Public Property SalesSupport As Boolean
+    Public Property Specialty As Boolean
+    Public Property Tradex As Boolean
+
+
+
+
     Public Property ModifiedBy As String
     Public Property ModifiedDate As DateTime
 

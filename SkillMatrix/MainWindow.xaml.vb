@@ -23,11 +23,19 @@ Class MainWindow
         For Each itm In sm.GetTowerList
             cmbTower.Items.Add(itm)
         Next
+        lstBO.Items.Clear()
+        lstCHI.Items.Clear()
         lstComm.Items.Clear()
-        lstGov.Items.Clear()
+        lstConcierge.Items.Clear()
         lstDCS.Items.Clear()
-        lstSpec.Items.Clear()
+        lstGov.Items.Clear()
+        lstIDNC.Items.Clear()
+        lstKaiser.Items.Clear()
         lstRouter.Items.Clear()
+        lstSalesSupport.Items.Clear()
+        lstSpecialty.Items.Clear()
+        lstTradex.Items.Clear()
+
 
         dt = sm.GetSkillInfo()
 
@@ -49,16 +57,31 @@ Class MainWindow
                 Me.RegisterName(x.Name, x)
 
                 Select Case dt.Rows(i).Item("SkillHome")
-                    Case "Comercial"
+                    Case "Back Office"
+                        lstBO.Items.Add(x)
+                    Case "CHI"
+                        lstCHI.Items.Add(x)
+                    Case "Commercial"
                         lstComm.Items.Add(x)
+                    Case "Concierge"
+                        lstConcierge.Items.Add(x)
                     Case "DCS"
                         lstDCS.Items.Add(x)
-                    Case "GoV"
+                    Case "GOV"
                         lstGov.Items.Add(x)
-                    Case "Speciality"
-                        lstSpec.Items.Add(x)
+                    Case "IDNC"
+                        lstIDNC.Items.Add(x)
+                    Case "Kaiser"
+                        lstKaiser.Items.Add(x)
+
                     Case "Router"
                         lstRouter.Items.Add(x)
+                    Case "Sales Support"
+                        lstSalesSupport.Items.Add(x)
+                    Case "Specialty"
+                        lstSpecialty.Items.Add(x)
+                    Case "Tradex"
+                        lstTradex.Items.Add(x)
                 End Select
 
 
@@ -90,6 +113,11 @@ Class MainWindow
 
 
             gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+            Try
+                gvAgents.Columns("EmpNo").IsVisible = False
+            Catch ex As Exception
+
+            End Try
 
 
             Me.WindowState = WindowState.Maximized
@@ -103,6 +131,7 @@ Class MainWindow
         btnSave.Visibility = Visibility.Visible
 
         gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+        gvAgents.Columns("EmpNo").IsVisible = False
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As RoutedEventArgs) Handles btnEdit.Click
@@ -135,16 +164,20 @@ Class MainWindow
         tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
 
         stkCBFunction.Visibility = Visibility.Visible
-        stkHomeSkill.Visibility = Visibility.Hidden
-        stkChannel.Visibility = Visibility.Hidden
-        stkSpecSkill.Visibility = Visibility.Hidden
+        stkHomeSkill.Visibility = Visibility.Collapsed
+        stkChannel.Visibility = Visibility.Collapsed
+        stkSpecSkill.Visibility = Visibility.Collapsed
 
+        grdCFLogs.Visibility = Visibility.Collapsed
+        grdCHLogs.Visibility = Visibility.Collapsed
+        grdHSLogs.Visibility = Visibility.Collapsed
+        grdSPLogs.Visibility = Visibility.Collapsed
 
 
         If Not IsNothing(agentLst) Then
 
 
-            lblEmp.Content = agentLst.Item("EmpName")
+            lblEmp.Content = agentLst.Item("Name")
             lblSup.Content = agentLst.Item("Supervisor")
             lblManager.Content = agentLst.Item("Manager")
             lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
@@ -169,25 +202,57 @@ Class MainWindow
 
             hs = sm.GetHSInfo(agentLst.Item("EmpNo"))
 
+
+
+            tab2ChkBackOffice.IsChecked = hs.BackOffice
+            tab2ChkCHI.IsChecked = hs.CHI
+            tab2ChkConcierge.IsChecked = hs.Concierge
             tab2ChkCommercial.IsChecked = hs.Commercial
             tab2ChkDCS.IsChecked = hs.DCS
-            tab2ChkGoV.IsChecked = hs.GoV
-            tab2ChkSpeciality.IsChecked = hs.Speciality
-            tab2ChkBackOffice.IsChecked = hs.Router
-            If tab2ChkCommercial.IsChecked Then
-                stkComercial.Visibility = Visibility.Visible
+            tab2ChkGOV.IsChecked = hs.GOV
+            tab2ChkIDNC.IsChecked = hs.IDNC
+            tab2ChkKaiser.IsChecked = hs.Kaiser
+            tab2ChkRouter.IsChecked = hs.Router
+            tab2ChkSalesSupport.IsChecked = hs.SalesSupport
+            tab2ChkSpecialty.IsChecked = hs.Specialty
+            tab2ChkTradex.IsChecked = hs.Tradex
+
+
+            If tab2ChkBackOffice.IsChecked Then
+                stkBackOffice.Visibility = Visibility.Visible
+            End If
+            If tab2ChkCHI.IsChecked Then
+                stkCHI.Visibility = Visibility.Visible
+            End If
+            If tab2ChkConcierge.IsChecked Then
+                stkConcierge.Visibility = Visibility.Visible
             End If
             If tab2ChkCommercial.IsChecked Then
+                stkCommercial.Visibility = Visibility.Visible
+            End If
+            If tab2ChkDCS.IsChecked Then
                 stkDCS.Visibility = Visibility.Visible
             End If
-            If tab2ChkGoV.IsChecked Then
+            If tab2ChkGOV.IsChecked Then
                 stkGovernment.Visibility = Visibility.Visible
             End If
-            If tab2ChkSpeciality.IsChecked Then
-                stkSpeciality.Visibility = Visibility.Visible
+            If tab2ChkIDNC.IsChecked Then
+                stkIDNC.Visibility = Visibility.Visible
             End If
-            If tab2ChkBackOffice.IsChecked Then
+            If tab2ChkKaiser.IsChecked Then
+                stkKaiser.Visibility = Visibility.Visible
+            End If
+            If tab2ChkRouter.IsChecked Then
                 stkRouter.Visibility = Visibility.Visible
+            End If
+            If tab2ChkSalesSupport.IsChecked Then
+                stkSalesSupport.Visibility = Visibility.Visible
+            End If
+            If tab2ChkSpecialty.IsChecked Then
+                stkSpecialty.Visibility = Visibility.Visible
+            End If
+            If tab2ChkTradex.IsChecked Then
+                stkTradex.Visibility = Visibility.Visible
             End If
 
 
@@ -217,7 +282,6 @@ Class MainWindow
             grdEdit.Visibility = Visibility.Visible
             grdNameInfo.Visibility = Visibility.Visible
         End If
-
 
 
 
@@ -517,7 +581,7 @@ Class MainWindow
         If Not IsNothing(agentLst) Then
 
 
-            lblEmp.Content = agentLst.Item("EmpName")
+            lblEmp.Content = agentLst.Item("Name")
             lblSup.Content = agentLst.Item("Supervisor")
             lblManager.Content = agentLst.Item("Manager")
             lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
@@ -542,25 +606,57 @@ Class MainWindow
 
             hs = sm.GetHSInfo(agentLst.Item("EmpNo"))
 
+
+
+            tab2ChkBackOffice.IsChecked = hs.BackOffice
+            tab2ChkCHI.IsChecked = hs.CHI
+            tab2ChkConcierge.IsChecked = hs.Concierge
             tab2ChkCommercial.IsChecked = hs.Commercial
             tab2ChkDCS.IsChecked = hs.DCS
-            tab2ChkGoV.IsChecked = hs.GoV
-            tab2ChkSpeciality.IsChecked = hs.Speciality
-            tab2ChkBackOffice.IsChecked = hs.Router
-            If tab2ChkCommercial.IsChecked Then
-                stkComercial.Visibility = Visibility.Visible
+            tab2ChkGOV.IsChecked = hs.GOV
+            tab2ChkIDNC.IsChecked = hs.IDNC
+            tab2ChkKaiser.IsChecked = hs.Kaiser
+            tab2ChkRouter.IsChecked = hs.Router
+            tab2ChkSalesSupport.IsChecked = hs.SalesSupport
+            tab2ChkSpecialty.IsChecked = hs.Specialty
+            tab2ChkTradex.IsChecked = hs.Tradex
+
+
+            If tab2ChkBackOffice.IsChecked Then
+                stkBackOffice.Visibility = Visibility.Visible
+            End If
+            If tab2ChkCHI.IsChecked Then
+                stkCHI.Visibility = Visibility.Visible
+            End If
+            If tab2ChkConcierge.IsChecked Then
+                stkConcierge.Visibility = Visibility.Visible
             End If
             If tab2ChkCommercial.IsChecked Then
+                stkCommercial.Visibility = Visibility.Visible
+            End If
+            If tab2ChkDCS.IsChecked Then
                 stkDCS.Visibility = Visibility.Visible
             End If
-            If tab2ChkGoV.IsChecked Then
+            If tab2ChkGOV.IsChecked Then
                 stkGovernment.Visibility = Visibility.Visible
             End If
-            If tab2ChkSpeciality.IsChecked Then
-                stkSpeciality.Visibility = Visibility.Visible
+            If tab2ChkIDNC.IsChecked Then
+                stkIDNC.Visibility = Visibility.Visible
             End If
-            If tab2ChkBackOffice.IsChecked Then
+            If tab2ChkKaiser.IsChecked Then
+                stkKaiser.Visibility = Visibility.Visible
+            End If
+            If tab2ChkRouter.IsChecked Then
                 stkRouter.Visibility = Visibility.Visible
+            End If
+            If tab2ChkSalesSupport.IsChecked Then
+                stkSalesSupport.Visibility = Visibility.Visible
+            End If
+            If tab2ChkSpecialty.IsChecked Then
+                stkSpecialty.Visibility = Visibility.Visible
+            End If
+            If tab2ChkTradex.IsChecked Then
+                stkTradex.Visibility = Visibility.Visible
             End If
 
 
@@ -683,8 +779,8 @@ Class MainWindow
             tempHS.EmpNo = _EmpNo
             tempHS.Commercial = tab2ChkCommercial.IsChecked
             tempHS.DCS = tab2ChkDCS.IsChecked
-            tempHS.GoV = tab2ChkGoV.IsChecked
-            tempHS.Speciality = tab2ChkSpeciality.IsChecked
+            tempHS.GOV = tab2ChkGOV.IsChecked
+            'tempHS.Speciality = tab2ChkSpeciality.IsChecked
             tempHS.Router = tab2ChkRouter.IsChecked
 
             HS = sm.SaveHSInfo(tempHS)
@@ -717,6 +813,34 @@ Class MainWindow
             Dim lstSkillId As New List(Of Integer)
 
 
+            If tab2ChkBackOffice.IsChecked Then
+                For Each itm In lstBO.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+
+
+            If tab2ChkCHI.IsChecked Then
+                For Each itm In lstCHI.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
             If tab2ChkCommercial.IsChecked Then
                 For Each itm In lstComm.Items
 
@@ -729,10 +853,19 @@ Class MainWindow
 
                 Next
             End If
+            If tab2ChkConcierge.IsChecked Then
+                For Each itm In lstConcierge.Items
 
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
 
+                Next
+            End If
             If tab2ChkDCS.IsChecked Then
-
                 For Each itm In lstDCS.Items
 
                     Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
@@ -744,8 +877,7 @@ Class MainWindow
 
                 Next
             End If
-
-            If tab2ChkGoV.IsChecked Then
+            If tab2ChkGOV.IsChecked Then
                 For Each itm In lstGov.Items
 
                     Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
@@ -757,9 +889,23 @@ Class MainWindow
 
                 Next
             End If
+            If tab2ChkIDNC.IsChecked Then
+                For Each itm In lstIDNC.Items
 
-            If tab2ChkSpeciality.IsChecked Then
-                For Each itm In lstSpec.Items
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+
+
+            If tab2ChkKaiser.IsChecked Then
+                For Each itm In lstKaiser.Items
 
                     Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
                     If Not IsNothing(cb) Then
@@ -784,6 +930,46 @@ Class MainWindow
                 Next
             End If
 
+
+
+            If tab2ChkSalesSupport.IsChecked Then
+                For Each itm In lstSalesSupport.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+            If tab2ChkSpecialty.IsChecked Then
+                For Each itm In lstSpecialty.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkTradex.IsChecked Then
+                For Each itm In lstTradex.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
             SP = sm.SaveSPInfo(lstSkillId, agentLst.Item("EmpNo"))
             If SP Then
                 MsgBox("Sucess Saving Skill Preference")
@@ -794,48 +980,20 @@ Class MainWindow
 
 
                 gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+                gvAgents.Columns("EmpNo").IsVisible = False
             End If
         End If
     End Sub
 
-    Private Sub tab2ChkCommercial_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCommercial.Checked
-        stkComercial.Visibility = Visibility.Visible
-    End Sub
 
-    Private Sub tab2ChkCommercial_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCommercial.Unchecked
-        stkComercial.Visibility = Visibility.Collapsed
-    End Sub
 
-    Private Sub tab2ChkGoV_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkGoV.Checked
-        stkGovernment.Visibility = Visibility.Visible
-    End Sub
-    Private Sub tab2ChkGoV_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkGoV.Unchecked
-        stkGovernment.Visibility = Visibility.Collapsed
-    End Sub
 
-    Private Sub tab2ChkDCS_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkDCS.Checked
-        stkDCS.Visibility = Visibility.Visible
-    End Sub
 
-    Private Sub tab2ChkDCS_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkDCS.Unchecked
-        stkDCS.Visibility = Visibility.Collapsed
-    End Sub
 
-    Private Sub tab2ChkSpeciality_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSpeciality.Checked
-        stkSpeciality.Visibility = Visibility.Visible
-    End Sub
 
-    Private Sub tab2ChkSpeciality_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSpeciality.Unchecked
-        stkSpeciality.Visibility = Visibility.Collapsed
-    End Sub
 
-    Private Sub tab2ChkBackOffice_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkBackOffice.Checked
-        stkRouter.Visibility = Visibility.Visible
-    End Sub
 
-    Private Sub tab2ChkBackOffice_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkBackOffice.Unchecked
-        stkRouter.Visibility = Visibility.Visible
-    End Sub
+
 
     Private Sub tabAgList_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles tabAgList.MouseDown
 
@@ -857,61 +1015,486 @@ Class MainWindow
     End Sub
 
     Private Sub btnLogs_Click(sender As Object, e As RoutedEventArgs) Handles btnLogs.Click
-        x = 0
-        y = 1
-        grdCFLogs.Visibility = Visibility.Visible
-        grdSearch.Visibility = Visibility.Collapsed
-        grdEdit.Visibility = Visibility.Visible
-        grdNameInfo.Visibility = Visibility.Visible
+        If Not IsNothing(gvAgents.SelectedItem) Then
+            x = 0
+            y = 1
 
-        stkCBFunction.Visibility = Visibility.Collapsed
-        stkHomeSkill.Visibility = Visibility.Collapsed
-        stkChannel.Visibility = Visibility.Collapsed
-        stkSpecSkill.Visibility = Visibility.Collapsed
+            stkLogs.Visibility = Visibility.Visible
 
-        grdCFLogs.Visibility = Visibility.Visible
-        grdCHLogs.Visibility = Visibility.Collapsed
-        grdHSLogs.Visibility = Visibility.Collapsed
-        grdSPLogs.Visibility = Visibility.Collapsed
-        agentLst = gvAgents.SelectedItem
-        If Not IsNothing(agentLst) Then
-            gvCFLogs.ItemsSource = sm.GetCFLog(agentLst.Item("EmpNo"))
-            gvCHLogs.ItemsSource = sm.GetCHLog(agentLst.Item("EmpNo"))
-            gvHSLogs.ItemsSource = sm.GetHSLog(agentLst.Item("EmpNo"))
-            gvSPLogs.ItemsSource = sm.GetSPLog(agentLst.Item("EmpNo"))
+            grdCFLogs.Visibility = Visibility.Visible
+            grdSearch.Visibility = Visibility.Collapsed
+            grdEdit.Visibility = Visibility.Visible
+            grdNameInfo.Visibility = Visibility.Visible
 
-            lblEmp.Content = agentLst.Item("EmpName")
-            lblSup.Content = agentLst.Item("Supervisor")
-            lblManager.Content = agentLst.Item("Manager")
-            lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
-            lblDomestic.Content = If(agentLst.Item("Domestic") = True, "Yes", "No")
-            btnSave.Visibility = Visibility.Collapsed
+            stkCBFunction.Visibility = Visibility.Collapsed
+            stkHomeSkill.Visibility = Visibility.Collapsed
+            stkChannel.Visibility = Visibility.Collapsed
+            stkSpecSkill.Visibility = Visibility.Collapsed
+
+            grdCFLogs.Visibility = Visibility.Visible
+            grdCHLogs.Visibility = Visibility.Collapsed
+            grdHSLogs.Visibility = Visibility.Collapsed
+            grdSPLogs.Visibility = Visibility.Collapsed
+            agentLst = gvAgents.SelectedItem
+            If Not IsNothing(agentLst) Then
+                gvCFLogs.ItemsSource = sm.GetCFLog(agentLst.Item("EmpNo")).DefaultView
+                gvCHLogs.ItemsSource = sm.GetCHLog(agentLst.Item("EmpNo")).DefaultView
+                gvHSLogs.ItemsSource = sm.GetHSLog(agentLst.Item("EmpNo")).DefaultView
+                gvSPLogs.ItemsSource = sm.GetSPLog(agentLst.Item("EmpNo")).DefaultView
+
+                If gvCFLogs.Items.Count > 0 Then
+                    gvCFLogs.Columns("EmpNo").IsVisible = False
+                    gvCFLogs.Columns("EmpName").IsVisible = False
+                End If
+                If gvCHLogs.Items.Count > 0 Then
+                    gvCHLogs.Columns("EmpNo").IsVisible = False
+                    gvCHLogs.Columns("EmpName").IsVisible = False
+                End If
+                If gvHSLogs.Items.Count > 0 Then
+                    gvHSLogs.Columns("EmpNo").IsVisible = False
+                    gvHSLogs.Columns("EmpName").IsVisible = False
+                End If
+                If gvSPLogs.Items.Count > 0 Then
+                    gvSPLogs.Columns("EmpNo").IsVisible = False
+                    gvSPLogs.Columns("EmpName").IsVisible = False
+                End If
+
+
+                lblEmp.Content = agentLst.Item("Name")
+                lblSup.Content = agentLst.Item("Supervisor")
+                lblManager.Content = agentLst.Item("Manager")
+                lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
+                lblDomestic.Content = If(agentLst.Item("Domestic") = True, "Yes", "No")
+                btnSave.Visibility = Visibility.Collapsed
+            End If
+
+            tabCBF.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+            tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        Else
+            MsgBox("Please select an employee to view logs")
         End If
-
-        tabCBF.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-        tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-
-        tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
     End Sub
 
-    Private Sub btnReviewed_Click(sender As Object, e As RoutedEventArgs) Handles btnReviewed.Click
+
+    'Private Sub btnReviewed_Click(sender As Object, e As RoutedEventArgs) Handles btnReviewed.Click
+    '    Dim agentLst As DataRow
+    '    agentLst = gvAgents.SelectedItem
+    '    Dim tempCF = New CoreFunctionInfo
+    '    Dim _EmpNo = agentLst.Item("EmpNo")
+    '    Dim CF As Boolean
+
+    '    tempCF.EmpNo = _EmpNo
+
+    '    CF = sm.SaveReviewedLog(tempCF)
+    '    If CF Then
+    '        MsgBox("Selected Item is Reviewed")
+    '        gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+    '        gvAgents.Columns("EmpNo").IsVisible = False
+    '    End If
+    'End Sub
+    Private Sub tab2ChkBackOffice_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkBackOffice.Checked
+        stkBackOffice.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkBackOffice_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkBackOffice.Unchecked
+        stkBackOffice.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkCHI_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCHI.Checked
+        stkCHI.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkCHI_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCHI.Unchecked
+        stkCHI.Visibility = Visibility.Collapsed
+    End Sub
+    Private Sub tab2ChkCommercial_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCommercial.Checked
+        stkCommercial.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkCommercial_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkCommercial.Unchecked
+        stkCommercial.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkConcierge_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkConcierge.Checked
+        stkConcierge.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkConcierge_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkConcierge.Unchecked
+        stkConcierge.Visibility = Visibility.Collapsed
+    End Sub
+    Private Sub tab2ChkDCS_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkDCS.Checked
+        stkDCS.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkDCS_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkDCS.Unchecked
+        stkDCS.Visibility = Visibility.Collapsed
+    End Sub
+    Private Sub tab2ChkGoV_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkGOV.Checked
+        stkGovernment.Visibility = Visibility.Visible
+    End Sub
+    Private Sub tab2ChkGoV_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkGOV.Unchecked
+        stkGovernment.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkIDNC_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkIDNC.Checked
+        stkIDNC.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkIDNC_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkIDNC.Unchecked
+        stkIDNC.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkKaiser_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkKaiser.Checked
+        stkKaiser.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkKaiser_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkKaiser.Unchecked
+        stkKaiser.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkRouter_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkRouter.Checked
+        stkRouter.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkRouter_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkRouter.Unchecked
+        stkRouter.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkSalesSupport_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSalesSupport.Checked
+        stkSalesSupport.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkSalesSupport_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSalesSupport.Unchecked
+        stkSalesSupport.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkSpecialty_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSpecialty.Checked
+        stkSpecialty.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkSpecialty_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkSpecialty.Unchecked
+        stkSpecialty.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub tab2ChkTradex_Checked(sender As Object, e As RoutedEventArgs) Handles tab2ChkTradex.Checked
+        stkTradex.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub tab2ChkTradex_Unchecked(sender As Object, e As RoutedEventArgs) Handles tab2ChkTradex.Unchecked
+        stkTradex.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub btnApprove_Click(sender As Object, e As RoutedEventArgs) Handles btnApprove.Click
         Dim agentLst As DataRow
+        Dim drCF As DataRow
+        Dim drHS As DataRow
+        Dim drCH As DataRow
+        Dim drSP As DataRow
         agentLst = gvAgents.SelectedItem
+        Dim _id As Integer
         Dim tempCF = New CoreFunctionInfo
+        Dim tempHS = New HomeSkillInfo
+        Dim tempCH = New ChannelInfo
+        Dim tempSP = New List(Of SkillPreference)
         Dim _EmpNo = agentLst.Item("EmpNo")
-        Dim CF As Boolean
 
-        tempCF.EmpNo = _EmpNo
+        Dim CF, HS, CH, SP As Boolean
 
-        CF = sm.SaveReviewedLog(tempCF)
-        If CF Then
-            MsgBox("Selected Item is Reviewed")
-            gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+        If a Then
+            drCF = gvCFLogs.SelectedItem
+            tempCF.EmpNo = _EmpNo
+            tempCF.OrderProcess = drCF.Item("OrderProcess") 'tab1CmbOrderProcess.SelectedIndex
+            tempCF.Credit = drCF.Item("Credit") 'tab1CmbCredit.SelectedIndex
+            tempCF.Rebill = drCF.Item("Rebill") 'tab1CmbRebill.SelectedIndex
+            tempCF.Returns = drCF.Item("Returns") 'tab1CmbReturn.SelectedIndex
+            tempCF.Complaints = drCF.Item("Complaints") 'tab1CmbComplaints.SelectedIndex
+            tempCF.PricingProduct = drCF.Item("PricingProduct") 'tab1CmbPrcProd.SelectedIndex
+            tempCF.ShippingDiscrepancy = drCF.Item("ShippingDiscrepancy") 'tab1CmbShipDisc.SelectedIndex
+            tempCF.DocumentRequests = drCF.Item("DocumentRequests") 'tab1CmbDocumentRequest.SelectedIndex
+            tempCF.Implementation = drCF.Item("Implementation") 'tab1CmbImplementation.SelectedIndex
+            tempCF.ValueLinkTrained = drCF.Item("ValueLinkTrained") 'cmbVLTrained.SelectedIndex
+            tempCF.Comment = drCF.Item("Comment") 'tab1TxtComment.Text
+            CF = sm.SaveCFLog(tempCF, _id)
+            If CF Then
+                MsgBox("Sucess Saving Core Business Function")
+                a = 0
+                b = 1
+                c = 0
+                d = 0
+                tabCHL.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+
+                stkCBFunction.Visibility = Visibility.Hidden
+                stkHomeSkill.Visibility = Visibility.Hidden
+                stkChannel.Visibility = Visibility.Visible
+                stkSpecSkill.Visibility = Visibility.Hidden
+
+            Else
+                MsgBox("FailedSaving Core Business Function")
+            End If
+
+        ElseIf b Then
+            tempCH.EmpNo = _EmpNo
+            tempCH.Router = tab3CmbRouter.Text
+            tempCH.Phone = tab3CmbPhone.Text
+            tempCH.Email = tab3CmbEmail.Text
+            tempCH.Cases = tab3CmbCase.Text
+
+            CH = sm.SaveCHInfo(tempCH)
+            If CH Then
+                MsgBox("Sucess Saving Channel")
+                a = 0
+                b = 0
+                c = 1
+                d = 0
+                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+
+                stkCBFunction.Visibility = Visibility.Hidden
+                stkHomeSkill.Visibility = Visibility.Visible
+                stkChannel.Visibility = Visibility.Hidden
+                stkSpecSkill.Visibility = Visibility.Hidden
+
+            Else
+                MsgBox("FailedSaving Saving Channel")
+            End If
+
+
+        ElseIf c Then
+            tempHS.EmpNo = _EmpNo
+            tempHS.Commercial = tab2ChkCommercial.IsChecked
+            tempHS.DCS = tab2ChkDCS.IsChecked
+            tempHS.GOV = tab2ChkGOV.IsChecked
+            'tempHS.Speciality = tab2ChkSpeciality.IsChecked
+            tempHS.Router = tab2ChkRouter.IsChecked
+
+            HS = sm.SaveHSInfo(tempHS)
+            If HS Then
+                MsgBox("Sucess Saving Home Skill")
+                a = 0
+                b = 0
+                c = 0
+                d = 1
+                tabSS.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+
+                stkCBFunction.Visibility = Visibility.Hidden
+                stkHomeSkill.Visibility = Visibility.Hidden
+                stkChannel.Visibility = Visibility.Hidden
+                stkSpecSkill.Visibility = Visibility.Visible
+
+            Else
+                MsgBox("Failed Saving Home Skill")
+            End If
+
+        ElseIf d Then
+            Dim lstSkillId As New List(Of Integer)
+
+
+            If tab2ChkBackOffice.IsChecked Then
+                For Each itm In lstBO.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+
+
+            If tab2ChkCHI.IsChecked Then
+                For Each itm In lstCHI.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+            If tab2ChkCommercial.IsChecked Then
+                For Each itm In lstComm.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkConcierge.IsChecked Then
+                For Each itm In lstConcierge.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkDCS.IsChecked Then
+                For Each itm In lstDCS.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkGOV.IsChecked Then
+                For Each itm In lstGov.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkIDNC.IsChecked Then
+                For Each itm In lstIDNC.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+
+
+            If tab2ChkKaiser.IsChecked Then
+                For Each itm In lstKaiser.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+            If tab2ChkRouter.IsChecked Then
+                For Each itm In lstRouter.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+
+
+            If tab2ChkSalesSupport.IsChecked Then
+                For Each itm In lstSalesSupport.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+            If tab2ChkSpecialty.IsChecked Then
+                For Each itm In lstSpecialty.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+            If tab2ChkTradex.IsChecked Then
+                For Each itm In lstTradex.Items
+
+                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                    If Not IsNothing(cb) Then
+                        If cb.IsChecked Then
+                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                        End If
+                    End If
+
+                Next
+            End If
+
+            SP = sm.SaveSPInfo(lstSkillId, agentLst.Item("EmpNo"))
+            If SP Then
+                MsgBox("Sucess Saving Skill Preference")
+
+                grdSearch.Visibility = Visibility.Visible
+                grdEdit.Visibility = Visibility.Collapsed
+                grdNameInfo.Visibility = Visibility.Collapsed
+
+
+                gvAgents.ItemsSource = sm.GetAgentInfo(cmbSegment.SelectedValue)
+                gvAgents.Columns("EmpNo").IsVisible = False
+            End If
         End If
+
+
+
+
+
+
+
     End Sub
 End Class
