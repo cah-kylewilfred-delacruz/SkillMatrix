@@ -11,7 +11,7 @@ Public Class SkillMatrixClass
         Me.gridMainDbConnection = New SqlConnection
         Me.gridMainDbCommand = New SqlCommand
 
-        Me.gridMainDbConnection.ConnectionString = "Data Source=LWPF0RR5J1;" &
+        Me.gridMainDbConnection.ConnectionString = "Data Source=WPPHL039SQL01;" &
                             "Initial Catalog=RPA_GRID" & ";" &
                             "Persist Security Info=True;" &
                             "Integrated Security=SSPI;" &
@@ -569,9 +569,9 @@ Public Class SkillMatrixClass
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
             If _seg = 0 Then
-                da = New SqlDataAdapter("  SELECT DISTINCT * FROM [dbo].[vQuery_SummaryView] WHERE [TeamId]  IN (SELECT DISTINCT TeamId from vQuery_TeamPull WHERE [Segment] = '" & _dept & "')  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];", Me.gridMainDbConnection)
+                da = New SqlDataAdapter("  SELECT DISTINCT * FROM [dbo].[vQuery_SMSummaryView] WHERE [TeamId]  IN (SELECT DISTINCT TeamId from vQuery_TeamPull WHERE [Segment] = '" & _dept & "')  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];", Me.gridMainDbConnection)
             Else
-                Dim sql As String = "  SELECT DISTINCT * FROM [dbo].[vQuery_SummaryView] WHERE [TeamId]= " & _seg & "  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];"
+                Dim sql As String = "  SELECT DISTINCT * FROM [dbo].[vQuery_SMSummaryView] WHERE [TeamId]= " & _seg & "  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];"
                 da = New SqlDataAdapter(sql, Me.gridMainDbConnection)
             End If
 
