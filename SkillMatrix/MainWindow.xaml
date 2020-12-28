@@ -98,60 +98,116 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Name="topBar" Height="20" VerticalAlignment="Top" Background="#FFEA3939">
-            
+        <Grid Grid.Row="0" Name="topBar" Height="20" VerticalAlignment="Top" Background="#1a0000">
+
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
             <Grid Name="grdSearch" Grid.Column="0" Background="#232A2E" Visibility="Visible">
 
                 <StackPanel Orientation="Vertical">
 
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="White" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Tower" Margin="30,20,30,0"/>
-                        <ComboBox Name="cmbTower" Margin="30,10,30,0"/>
+                        <Label Foreground="White" HorizontalContentAlignment="Center" BorderBrush="#FFD75C5C" Content="Tower" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <ComboBox x:Name="cmbTower" Margin="35,-3,30,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="White" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Department" Margin="30,20,30,0"/>
-                        <ComboBox Name="cmbDept" Margin="30,10,30,0"/>
+                        <Label Foreground="White" HorizontalContentAlignment="Center" BorderBrush="#FFEA3939" Content="Department" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <ComboBox Name="cmbDept" Margin="35,-3,30,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="White" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Segment" Margin="30,20,30,0"/>
-                        <ComboBox Name="cmbSegment" ItemsSource="{Binding}" DisplayMemberPath="Segment" SelectedValuePath="Id" Margin="30,10,30,0"/>
+                        <Label Foreground="White" HorizontalContentAlignment="Center" BorderBrush="#FFEA3939" Content="Segment" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <ComboBox Name="cmbSegment" ItemsSource="{Binding}" DisplayMemberPath="Segment" SelectedValuePath="Id" Margin="35,-3,30,0"/>
                     </StackPanel>
 
 
                 </StackPanel>
                 <Button Name="btnSearch" Content="Search" Height="35" BorderBrush="White" BorderThickness="1" VerticalAlignment="Bottom" Background="{x:Null}" Margin="30,10,30,20" Foreground="White"/>
             </Grid>
-
             <Grid Name="grdNameInfo" Grid.Column="0" Background="#232A2E" Visibility="Collapsed">
 
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Employee" Margin="30,20,30,0" FontStyle="Oblique" FontWeight="Bold"/>
-                        <Label Name="lblEmp" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="30,10,30,0" FontStyle="Oblique" FontWeight="Bold"/>
+                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Content="Employee" Margin="30,20,35,0" FontStyle="Oblique" FontWeight="Bold">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <Label Name="lblEmp" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="35,0,30,0" FontStyle="Oblique" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Supervisor" Margin="30,20,30,0"/>
-                        <Label Name="lblSup" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="30,10,30,0"/>
+                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Content="Supervisor" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <Label Name="lblSup" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="35,0,30,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Manager" Margin="30,20,30,0"/>
-                        <Label Name="lblManager" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="30,10,30,0"/>
+                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Content="Manager" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <Label Name="lblManager" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="35,0,30,0"/>
                     </StackPanel>
-                    
-                    
+
+
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Domestic" Margin="30,20,30,0"/>
-                        <Label Name="lblDomestic" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="30,10,30,0"/>
+                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Content="Domestic" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <Label Name="lblDomestic" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="35,0,30,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
-                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#FFEA3939" Content="Status" Margin="30,20,30,0"/>
-                        <Label Name="lblStatus" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="30,10,30,0"/>
+                        <Label Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Content="Status" Margin="30,20,35,0">
+                            <Label.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Red" Offset="0"/>
+                                    <GradientStop Color="#232A2E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Label.Background>
+                        </Label>
+                        <Label Name="lblStatus" Foreground="#232A2E" HorizontalContentAlignment="Center" Background="#FFEAE5C5" Content="" Margin="35,0,30,0"/>
                     </StackPanel>
 
 
@@ -168,11 +224,11 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    
+
                 </Grid>
 
 
-                <Grid Grid.Row="1" >
+                <Grid Grid.Row="1" Background="#232A2E" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
@@ -180,28 +236,40 @@
 
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="Agent List" Width="135" Name="tabAgList" BorderBrush="#FFEA3939" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FFEA3939" HorizontalContentAlignment="Center" Margin="5,5,1,0"/>
+                            <Label Content="Agent List" Width="135" Name="tabAgList" BorderBrush="Transparent" BorderThickness="2" Foreground="White" Background="#990000" HorizontalContentAlignment="Center" Margin="5,5,1,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Name="btnSummary" Content="Summary" Width="70" Height="30" BorderBrush="White" BorderThickness="1" Background="#FFEA3939" Foreground="White" Margin="0,0,10,0"/>
-                            <Button Name="btnLogs" Content="Logs" Width="70" Height="30" BorderBrush="White" BorderThickness="1" Background="#FFEA3939" Foreground="White" Margin="0,0,10,0"/>
+                            <Button Name="btnSummary" Content="Summary" Width="70" Height="30" BorderBrush="Transparent" BorderThickness="1" Foreground="White" Margin="0,0,10,0" >
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Red" Offset="0"/>
+                                        <GradientStop Color="#232A2E" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
+                            <Button Name="btnLogs" Content="Logs" Width="70" Height="30" BorderBrush="Transparent" BorderThickness="1" Foreground="White" Margin="0,0,10,0">
+
+                                <Button.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Red" Offset="0"/>
+                                        <GradientStop Color="#232A2E" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+
+                            </Button>
                         </StackPanel>
                     </Grid>
 
 
 
                     <Grid Grid.Row="1" Name="grdAgentList" Visibility="Visible">
-                        <telerik:RadGridView Name="gvAgents" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" Foreground="#232A2E" BorderBrush="Gray" BorderThickness="1" AlternateRowBackground="WhiteSmoke" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" Background="#FFF0F0F0"  >
-
-                            <telerik:StyleManager.Theme>
-                                <telerik:Office_BlueTheme/>
-                            </telerik:StyleManager.Theme>
-
+                        <telerik:RadGridView Name="gvAgents"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
+ 
                         </telerik:RadGridView>
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0.5,1.1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFEA3939" Offset="0.1"/>
-                                <GradientStop Color="#FFF5F3E7" Offset="0.8"/>
+                                <GradientStop Color="#990000" Offset="0.1"/>
+                                <GradientStop Color="#232A2E" Offset="0.8"/>
                             </LinearGradientBrush>
                         </Grid.Background>
 
@@ -220,7 +288,7 @@
 
             <!--EDIT MENU-->
 
-            <Grid Name="grdEdit" Grid.Column="1" Visibility="Collapsed">
+            <Grid Name="grdEdit" Grid.Column="2" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="*"/>
@@ -228,14 +296,14 @@
                 </Grid.RowDefinitions>
 
 
-                <Grid Grid.Row="0" Background="#FFF5F3E7">
+                <Grid Grid.Row="0" Background="#232A2E">
                     <!--<Button Name="btnSEMin" Content="-" Height="14" Width="14" HorizontalAlignment="Right" Foreground="white" BorderBrush="{x:Null}" Background="#232A2E" Margin="0,0,10,0"/>-->
                 </Grid>
 
 
 
 
-                <Grid Grid.Row="1" Background="#FFF5F3E7">
+                <Grid Grid.Row="1" Background="#232A2E">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
@@ -250,25 +318,27 @@
                         <Label Content="Home Skill" Width="135" Name="tabHSkill" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
                         <Label Content="Skill Preference" Width="135" Name="tabSS" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
 
-                        
+
                     </StackPanel>
                     <StackPanel Name="stkLogs" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
                         <Button Name="btnApprove" Content="Approve" Width="70" Height="30" BorderBrush="#232A2E" BorderThickness="1" Background="#FFEA3939" Foreground="White" Margin="0,0,10,0"/>
                     </StackPanel>
-                    <Grid Grid.Row="1">
-                        <Grid.Background>
-                            <LinearGradientBrush EndPoint="0.5,1.1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFEA3939" Offset="0.1"/>
-                                <GradientStop Color="#FFF5F3E7" Offset="0.8"/>
-                            </LinearGradientBrush>
-                        </Grid.Background>
+                    <Grid Grid.Row="1" Background="#333">
+
 
                         <!--      TABS      -->
 
 
                         <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Order Process" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Order Process" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbOrderProcess"  Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -277,7 +347,14 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Document Request" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Document Request" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbDocumentRequest"  Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -287,7 +364,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Credit" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Credit" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbCredit" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -296,7 +380,14 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Pricing / Product" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Pricing / Product" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbPrcProd" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -306,7 +397,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Rebill" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Rebill" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbRebill" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -315,7 +413,14 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Implementations" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Implementations" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbImplementation" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -325,7 +430,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Returns" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Returns" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbReturn" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -334,7 +446,14 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Research" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Research" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbResearch" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -344,7 +463,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Complaints" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Complaints" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbComplaints" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -352,7 +478,14 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                <Label Content="Carrier Disposition" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Carrier Disposition" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbCarrierDisposition" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -362,7 +495,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Shipping Discrepancy" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Shipping Discrepancy" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbShipDisc" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -370,7 +510,14 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                <Label Content="Account Maintenance" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Account Maintenance" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbAccountMaintenance" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -378,10 +525,17 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                
+
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Special Process Orders" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Special Process Orders" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab1CmbSPO" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -389,15 +543,29 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                
-                                <Label Content="ValueLink Trained?" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+
+                                <Label Content="ValueLink Trained?" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="cmbVLTrained" Height="30" Width="100" >
                                     <ComboBoxItem Content="No"/>
                                     <ComboBoxItem Content="Yes"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Comment" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" VerticalAlignment="Top" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Comment" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <TextBox Name="tab1TxtComment" Height="100" Width="500" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
 
                             </StackPanel>
@@ -410,71 +578,240 @@
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="CHI" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCHI"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="CHI" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCHI"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Commercial" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCommercial"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Commercial" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCommercial"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Concierge" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkConcierge"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Concierge" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkConcierge"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="DCS" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkDCS"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="DCS" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkDCS"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="GOV" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkGOV"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="GOV" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkGOV"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="IDNC" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkIDNC"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="IDNC" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkIDNC"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Kaiser" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkKaiser"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Kaiser" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkKaiser"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Router" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkRouter"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Router" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkRouter"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Sales Support" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSalesSupport"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Sales Support" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSalesSupport"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Specialty" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSpecialty"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Specialty" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSpecialty"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Tradex" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkTradex"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Tradex" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkTradex"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="Supply Assurance" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSupplyAssurance"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="Supply Assurance" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkSupplyAssurance"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="20,10,20,0" >
-                                <Grid Background="#232A2E">
-                                    <CheckBox Content="CET" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCET"  Height="30" Width="150" Margin="5,0" />
+                                <Grid>
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <CheckBox Content="CET" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="tab2ChkCET"  Height="30" Width="150" Margin="5,0" >
+                                        <CheckBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#232A2E" Offset="0"/>
+                                                <GradientStop Color="#333" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </CheckBox.Background>
+                                    </CheckBox>
                                 </Grid>
                             </StackPanel>
-                            
+
 
 
 
@@ -482,12 +819,33 @@
 
                         <StackPanel Name="stkChannel" Orientation="Vertical" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Proficiency" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,0,0"/>
-                                <Label Content="Priority" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,10,0"/>
+                                <Label Content="Proficiency" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,0,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <Label Content="Priority" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                             </StackPanel>
-                            
+
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Router" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Router" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbRouter"  Height="30" Width="100">
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -495,7 +853,14 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbPhonePRIO"  Height="30" Width="100">
                                     <ComboBoxItem Content="" />
                                     <ComboBoxItem Content="P1" />
@@ -508,7 +873,14 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbPhone"  Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -516,7 +888,14 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-                                <Label Content="Case / Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Case / Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbEmailCasePrio"  Height="30" Width="100" >
                                     <ComboBoxItem Content="" />
                                     <ComboBoxItem Content="P1" />
@@ -530,7 +909,14 @@
 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0"/>
+                                <Label Content="Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbEmail" Height="30" Width="100" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -541,7 +927,14 @@
 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Case" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,-15,10,0"/>
+                                <Label Content="Case" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,-15,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <ComboBox Name="tab3CmbCase" Height="30" Width="100" Margin="0,-15,0,0" >
                                     <ComboBoxItem Content=""/>
                                     <ComboBoxItem Content="New"/>
@@ -550,14 +943,21 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Reason" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Background="#232A2E" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,-15,10,0"/>
+                                <Label Content="Reason" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,-15,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
                                 <TextBox Name="tab3TxtReason" Height="50" Width="250" TextWrapping="Wrap" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="260,10,0,0" VerticalAlignment="Top">
-                                
+
                             </StackPanel>
-                            
-                            
+
+
                         </StackPanel>
 
                         <StackPanel Name="stkSpecSkill" Orientation="Horizontal" Visibility="Collapsed">
@@ -566,131 +966,166 @@
                                     <ColumnDefinition Width="1685"/>
                                 </Grid.ColumnDefinitions>
                                 <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto">
-                                
-                                <StackPanel Orientation="Horizontal">
+
+                                    <StackPanel Orientation="Horizontal">
 
 
                                         <StackPanel Name="stkBackOffice" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="Back Office" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="Back Office" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                        <ListBox Name="lstBO" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstBO" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
 
-                                        </ListBox>
+                                                    </ListBox>
 
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkCHI" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="CHI" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="CHI" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                        <ListBox Name="lstCHI" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstCHI" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
 
-                                        </ListBox>
+                                                    </ListBox>
 
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkCommercial" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="Commercial" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="Commercial" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
-                                        
-                                        <ListBox Name="lstComm" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
-                                            
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
-                                            
-                                            
-                                        </ListBox>
-                                        
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+
+                                                    <ListBox Name="lstComm" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
+
+
+                                                    </ListBox>
+
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkConcierge" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="Concierge" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="Concierge" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                        <ListBox Name="lstConcierge" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstConcierge" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
 
-                                        </ListBox>
+                                                    </ListBox>
 
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkDCS" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="DCS" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="DCS" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                        <ListBox Name="lstDCS" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                                    <ListBox Name="lstDCS" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
 
-                                        </ListBox>
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                    </ListBox>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkGovernment" Orientation="Vertical" Visibility="Collapsed">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Content="Government" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="Government" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                        <ListBox Name="lstGov" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                                    <ListBox Name="lstGov" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                            <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
 
-                                        </ListBox>
-                                    </ScrollViewer>
-                                </Grid>
-                            </StackPanel>
+                                                    </ListBox>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkIDNC" Orientation="Vertical" Visibility="Collapsed">
                                             <Grid>
@@ -698,7 +1133,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="IDNC" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="IDNC" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstIDNC" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -717,7 +1159,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="Kaiser" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="Kaiser" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstKaiser" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -736,7 +1185,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="Router" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="Router" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstRouter" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -769,23 +1225,30 @@
                                         </StackPanel>
 
                                         <StackPanel Name="stkSpecialty" Orientation="Vertical" Visibility="Collapsed">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="40"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Content="Specialty" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="40"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Grid.Row="0" Content="Specialty" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
-                                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstSpecialty" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
 
-                                                    <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
+                                                        <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
 
-                                                </ListBox>
-                                            </ScrollViewer>
-                                        </Grid>
-                                    </StackPanel>
+                                                    </ListBox>
+                                                </ScrollViewer>
+                                            </Grid>
+                                        </StackPanel>
 
                                         <StackPanel Name="stkTradex" Orientation="Vertical" Visibility="Collapsed">
                                             <Grid>
@@ -793,7 +1256,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="Tradex" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="Tradex" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstTradex" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -812,7 +1282,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="SupplyAssurance" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7"  Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="SupplyAssurance" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstSupplyAssurance" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -831,7 +1308,14 @@
                                                     <RowDefinition Height="40"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <Label Grid.Row="0" Content="CET" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
+                                                <Label Grid.Row="0" Content="CET" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                                    <Label.Background>
+                                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                                            <GradientStop Color="#333" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Label.Background>
+                                                </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                                                     <ListBox Name="lstCET" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
@@ -856,41 +1340,32 @@
                         <!--      LOGS      -->
 
                         <Grid Name="grdCFLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Name="gvCFLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" Foreground="#232A2E" BorderBrush="Gray" BorderThickness="1" AlternateRowBackground="WhiteSmoke" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" Background="#FFF0F0F0"  >
+                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCFLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
 
-                                <telerik:StyleManager.Theme>
-                                    <telerik:Office_BlueTheme/>
-                                </telerik:StyleManager.Theme>
+               
 
                             </telerik:RadGridView>
                         </Grid>
 
                         <Grid Name="grdCHLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Name="gvCHLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" Foreground="#232A2E" BorderBrush="Gray" BorderThickness="1" AlternateRowBackground="WhiteSmoke" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" Background="#FFF0F0F0"  >
+                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCHLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
 
-                                <telerik:StyleManager.Theme>
-                                    <telerik:Office_BlueTheme/>
-                                </telerik:StyleManager.Theme>
+                         
 
                             </telerik:RadGridView>
                         </Grid>
 
                         <Grid Name="grdHSLogs" Margin="5" Visibility="Visible">
-                            <telerik:RadGridView Name="gvHSLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" Foreground="#232A2E" BorderBrush="Gray" BorderThickness="1" AlternateRowBackground="WhiteSmoke" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" Background="#FFF0F0F0"  >
+                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvHSLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"   >
 
-                                <telerik:StyleManager.Theme>
-                                    <telerik:Office_BlueTheme/>
-                                </telerik:StyleManager.Theme>
 
                             </telerik:RadGridView>
                         </Grid>
 
                         <Grid Name="grdSPLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Name="gvSPLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" Foreground="#232A2E" BorderBrush="Gray" BorderThickness="1" AlternateRowBackground="WhiteSmoke" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" Background="#FFF0F0F0"  >
+                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvSPLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
 
-                                <telerik:StyleManager.Theme>
-                                    <telerik:Office_BlueTheme/>
-                                </telerik:StyleManager.Theme>
+                          
                             </telerik:RadGridView>
                         </Grid>
                     </Grid>
