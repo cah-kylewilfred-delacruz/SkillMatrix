@@ -38,6 +38,11 @@ Class MainWindow
         lstSupplyAssurance.Items.Clear()
         lstCET.Items.Clear()
 
+
+
+        lstPrimarySkill.Items.Clear()
+
+
         dt = sm.GetSkillInfo()
 
         If dt.Rows.Count > 0 Then
@@ -114,11 +119,7 @@ Class MainWindow
         grdNameInfo.Visibility = Visibility.Collapsed
 
 
-        gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
-
-        gvAgents.Columns("EmpNo").IsVisible = False
-        gvAgents.Columns("Domestic").IsVisible = False
-        gvAgents.Columns("TeamId").IsVisible = False
+        load()
         'gvAgents.Columns("LastModifiedDate").IsVisible = False
 
 
@@ -131,8 +132,8 @@ Class MainWindow
         grdEdit.Visibility = Visibility.Collapsed
         grdNameInfo.Visibility = Visibility.Collapsed
         btnSave.Visibility = Visibility.Visible
+        load()
 
-        gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
         'gvAgents.Columns("EmpNo").IsVisible = False
     End Sub
 
@@ -140,6 +141,12 @@ Class MainWindow
         gvEdit()
     End Sub
 
+    Private Sub load()
+        gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
+        gvAgents.Columns("EmpNo").IsVisible = False
+        gvAgents.Columns("Domestic").IsVisible = False
+        gvAgents.Columns("TeamId").IsVisible = False
+    End Sub
 
 
     Private Sub tabCBF_MouseEnter(sender As Object, e As MouseEventArgs) Handles tabCBF.MouseEnter
@@ -408,9 +415,10 @@ Class MainWindow
         Dim ch As New ChannelInfo
         Dim sp As New List(Of Integer)
         Dim sm As New SkillMatrixClass
-
+        btnApprove.Visibility = Visibility.Collapsed
+        btnSave.Visibility = Visibility.Visible
         agentLst = gvAgents.SelectedItem
-
+        lstPrimarySkill.Items.Clear()
 
 
 
@@ -451,7 +459,50 @@ Class MainWindow
             lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
             lblDomestic.Content = If(agentLst.Item("Domestic") = True, "Yes", "No")
 
+            sp = sm.GetSkillPrefInfo(agentLst.item("EmpNo"))
 
+            Dim str As String
+            For Each itm In sp
+                If str = "" Then
+                    str = "(" & itm
+                Else
+                    str = str & "," & itm
+                End If
+            Next
+
+            str = str & ")"
+
+            Dim pschk As New DataTable
+
+            pschk = sm.GetPrimarySkillInfo(str)
+
+            If pschk.Rows.Count > 0 Then
+                For i = 0 To pschk.Rows.Count - 1
+                    Dim x As New System.Windows.Controls.CheckBox
+
+                    x.Content = pschk.Rows(i).Item("SkillName")
+                    x.Name = "IDPS" & pschk.Rows(i).Item("Id")
+                    x.Width = 170
+                    x.Height = 30
+                    x.FontSize = 12
+                    x.HorizontalContentAlignment = Windows.HorizontalAlignment.Center
+                    x.VerticalContentAlignment = Windows.VerticalAlignment.Center
+                    x.VerticalAlignment = Windows.VerticalAlignment.Center
+                    x.HorizontalAlignment = Windows.HorizontalAlignment.Stretch
+                    x.Foreground = Windows.Media.Brushes.White
+                    x.Margin = New Thickness(5, 0, 5, 0)
+
+                    Try
+                        Me.RegisterName(x.Name, x)
+                    Catch ex As Exception
+                        Me.UnregisterName(x.Name)
+                        Me.RegisterName(x.Name, x)
+                    End Try
+
+
+                    lstPrimarySkill.Items.Add(x)
+                Next
+            End If
 
             cf = sm.GetCFInfo(agentLst.Item("EmpNo"))
 
@@ -540,7 +591,7 @@ Class MainWindow
             tab3TxtReason.Text = ch.Reason
 
 
-            sp = sm.GetSkillPrefInfo(agentLst.Item("EmpNo"))
+            'sp = sm.GetSkillPrefInfo(agentLst.Item("EmpNo"))
 
             If Not IsNothing(sp) Then
                 If sp.Count > 0 Then
@@ -548,6 +599,11 @@ Class MainWindow
                         Dim cb As System.Windows.Controls.CheckBox = Me.FindName("ID" & item)
                         If Not IsNothing(cb) Then
                             cb.IsChecked = True
+                        End If
+
+                        Dim cb1 As System.Windows.Controls.CheckBox = Me.FindName("IDPS" & item)
+                        If Not IsNothing(cb) Then
+                            cb1.IsChecked = True
                         End If
                     Next
                 End If
@@ -913,106 +969,82 @@ Class MainWindow
     End Sub
 
 
-
-
-
-
-
-
-
-
-
-    Private Sub tabAgList_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles tabAgList.MouseDown
-
-        tabAgList.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-        tabAgList.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-
-
-        grdAgentList.Visibility = Visibility.Visible
-    End Sub
-
-    Private Sub tabAgList_MouseEnter(sender As Object, e As MouseEventArgs) Handles tabAgList.MouseEnter
-        tabAgList.Background = New SolidColorBrush(Color.FromRgb(43, 54, 60))
-        tabAgList.BorderBrush = New SolidColorBrush(Color.FromRgb(43, 54, 60))
-    End Sub
-
-    Private Sub tabAgList_MouseLeave(sender As Object, e As MouseEventArgs) Handles tabAgList.MouseLeave
-        tabAgList.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-        tabAgList.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-    End Sub
-
     Private Sub btnLogs_Click(sender As Object, e As RoutedEventArgs) Handles btnLogs.Click
-        Dim agentlst
-        If Not IsNothing(gvAgents.SelectedItem) Then
-            x = 0
-            y = 1
+        'Dim agentlst
+        x = 0
+        y = 1
 
-            a = 1
-            b = 0
-            c = 0
-            d = 0
-            stkLogs.Visibility = Visibility.Visible
+        a = 1
+        b = 0
+        c = 0
+        d = 0
+        stkLogs.Visibility = Visibility.Visible
 
-            grdCFLogs.Visibility = Visibility.Visible
-            grdSearch.Visibility = Visibility.Collapsed
-            grdEdit.Visibility = Visibility.Visible
-            grdNameInfo.Visibility = Visibility.Visible
+        grdCFLogs.Visibility = Visibility.Visible
+        grdSearch.Visibility = Visibility.Visible
+        grdEdit.Visibility = Visibility.Visible
+        grdNameInfo.Visibility = Visibility.Collapsed
 
-            stkCBFunction.Visibility = Visibility.Collapsed
-            stkHomeSkill.Visibility = Visibility.Collapsed
-            stkChannel.Visibility = Visibility.Collapsed
-            stkSpecSkill.Visibility = Visibility.Collapsed
+        stkCBFunction.Visibility = Visibility.Collapsed
+        stkHomeSkill.Visibility = Visibility.Collapsed
+        stkChannel.Visibility = Visibility.Collapsed
+        stkSpecSkill.Visibility = Visibility.Collapsed
 
-            grdCFLogs.Visibility = Visibility.Visible
-            grdCHLogs.Visibility = Visibility.Collapsed
-            grdHSLogs.Visibility = Visibility.Collapsed
-            grdSPLogs.Visibility = Visibility.Collapsed
-
-            agentlst = gvAgents.SelectedItem
-            If Not IsNothing(agentLst) Then
-                gvCFLogs.ItemsSource = sm.GetCFLog(agentLst.Item("EmpNo")).DefaultView
-                gvCHLogs.ItemsSource = sm.GetCHLog(agentLst.Item("EmpNo")).DefaultView
-                gvHSLogs.ItemsSource = sm.GetHSLog(agentLst.Item("EmpNo")).DefaultView
-                gvSPLogs.ItemsSource = sm.GetSPLog(agentLst.Item("EmpNo")).DefaultView
-
-                If gvCFLogs.Items.Count > 0 Then
-                    gvCFLogs.Columns("EmpNo").IsVisible = False
-                    gvCFLogs.Columns("EmpName").IsVisible = False
-                End If
-                If gvCHLogs.Items.Count > 0 Then
-                    gvCHLogs.Columns("EmpNo").IsVisible = False
-                    gvCHLogs.Columns("EmpName").IsVisible = False
-                End If
-                If gvHSLogs.Items.Count > 0 Then
-                    gvHSLogs.Columns("EmpNo").IsVisible = False
-                    gvHSLogs.Columns("EmpName").IsVisible = False
-                End If
-                If gvSPLogs.Items.Count > 0 Then
-                    gvSPLogs.Columns("EmpNo").IsVisible = False
-                    gvSPLogs.Columns("EmpName").IsVisible = False
-                End If
+        grdCFLogs.Visibility = Visibility.Visible
+        grdCHLogs.Visibility = Visibility.Collapsed
+        grdHSLogs.Visibility = Visibility.Collapsed
+        grdSPLogs.Visibility = Visibility.Collapsed
+        btnApprove.Visibility = Visibility.Visible
+        'agentlst = gvAgents.SelectedItem
+        If Not IsNothing(cmbSegment.SelectedValue) Then
+            gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
+            gvCHLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
+            gvHSLogs.ItemsSource = sm.GetHSLog(cmbSegment.SelectedValue).DefaultView
+            gvSPLogs.ItemsSource = sm.GetSPLog(cmbSegment.SelectedValue).DefaultView
 
 
-                lblEmp.Content = agentLst.Item("Name")
-                lblSup.Content = agentLst.Item("Supervisor")
-                lblManager.Content = agentLst.Item("Manager")
-                lblStatus.Content = If(agentLst.Item("Status") = True, "Active", "Inactive")
-                lblDomestic.Content = If(agentlst.Item("Domestic") = True, "Yes", "No")
-                btnSave.Visibility = Visibility.Collapsed
+            If gvCFLogs.Items.Count > 0 Then
+                gvCFLogs.Columns("Id").IsVisible = False
+                gvCFLogs.Columns("EmpNo").IsVisible = False
+                gvCFLogs.Columns("TeamId").IsVisible = False
+            End If
+            If gvCHLogs.Items.Count > 0 Then
+                gvCHLogs.Columns("Id").IsVisible = False
+                gvCHLogs.Columns("EmpNo").IsVisible = False
+                gvCHLogs.Columns("TeamId").IsVisible = False
+            End If
+            If gvHSLogs.Items.Count > 0 Then
+                gvHSLogs.Columns("Id").IsVisible = False
+                gvHSLogs.Columns("EmpNo").IsVisible = False
+                gvHSLogs.Columns("TeamId").IsVisible = False
+            End If
+            If gvSPLogs.Items.Count > 0 Then
+                gvSPLogs.Columns("Id").IsVisible = False
+                gvSPLogs.Columns("EmpNo").IsVisible = False
+                gvSPLogs.Columns("TeamId").IsVisible = False
             End If
 
-            tabCBF.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-            tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
 
-            tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-            tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-            tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-            tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-            tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-            tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-        Else
-            MsgBox("Please select an employee to view logs")
+            'lblEmp.Content = agentlst.Item("Name")
+            'lblSup.Content = agentlst.Item("Supervisor")
+            'lblManager.Content = agentlst.Item("Manager")
+            'lblStatus.Content = If(agentlst.Item("Status") = True, "Active", "Inactive")
+            'lblDomestic.Content = If(agentlst.Item("Domestic") = True, "Yes", "No")
+            btnSave.Visibility = Visibility.Collapsed
         End If
+
+        tabCBF.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+        tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+        tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+        'Else
+        '    MsgBox("Please select an employee to view logs")
+        'End If
     End Sub
 
 
@@ -1525,6 +1557,37 @@ Class MainWindow
         frm.ShowDialog()
     End Sub
 
+    Private Sub btnChange_Click(sender As Object, e As RoutedEventArgs) Handles btnChange.Click
+        stkChange.Visibility = Visibility.Visible
+        stkPrimarySkill.Visibility = Visibility.Visible
+    End Sub
 
+    Private Sub btnCncl_Click(sender As Object, e As RoutedEventArgs) Handles btnCncl.Click
+        stkChange.Visibility = Visibility.Collapsed
+        stkPrimarySkill.Visibility = Visibility.Collapsed
+    End Sub
 
+    Private Sub btnSet_Click(sender As Object, e As RoutedEventArgs) Handles btnSet.Click
+        Dim str As String = ""
+        For Each itm In lstPrimarySkill.Items
+            Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+            If Not IsNothing(cb) Then
+                If cb.IsChecked = True Then
+                    If str = "" Then
+                        str = itm.Content
+                    Else
+                        str = str & "/" & itm.Content
+                    End If
+                End If
+            End If
+
+        Next
+
+        lblPrimarySkill.Content = str
+
+        stkChange.Visibility = Visibility.Collapsed
+        stkPrimarySkill.Visibility = Visibility.Collapsed
+
+        MsgBox("Primary skill has been set. Please click save to apply changes", vbInformation, "Agent Primary Skills")
+    End Sub
 End Class

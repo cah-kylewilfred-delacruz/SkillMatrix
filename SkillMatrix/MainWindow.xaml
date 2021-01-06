@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkillMatrix"
         mc:Ignorable="d"
-        Title="Skill Matrix" Height="450" Width="900" WindowStartupLocation="CenterScreen"  WindowStyle="None" WindowState="Maximized" Background="#FFF5F3E7">
+        Title="Skill Matrix" Height="700" Width="900" WindowStartupLocation="CenterScreen"  WindowStyle="None" WindowState="Maximized" Background="#FFF5F3E7">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
@@ -147,7 +147,7 @@
 
 
                 </StackPanel>
-                <Button Name="btnSearch" Content="Search" Height="35" BorderBrush="White" BorderThickness="1" VerticalAlignment="Bottom" Background="{x:Null}" Margin="30,10,30,20" Foreground="White"/>
+                <Button Name="btnSearch" Content="View Agents" Height="35" BorderBrush="White" BorderThickness="1" VerticalAlignment="Bottom" Background="{x:Null}" Margin="30,10,30,20" Foreground="White"/>
             </Grid>
             <Grid Name="grdNameInfo" Grid.Column="0" Background="#232A2E" Visibility="Collapsed">
 
@@ -288,7 +288,7 @@
 
             <!--EDIT MENU-->
 
-            <Grid Name="grdEdit" Grid.Column="2" Visibility="Collapsed">
+            <Grid Name="grdEdit" Grid.Column="2" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="*"/>
@@ -329,7 +329,7 @@
                         <!--      TABS      -->
 
 
-                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Collapsed">
+                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Visible">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Order Process" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
                                     <Label.Background>
@@ -569,6 +569,75 @@
                                 <TextBox Name="tab1TxtComment" Height="100" Width="500" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>
 
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Label Content="Primary Skill" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0" >
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <Label Name="lblPrimarySkill" Content="test" Background="White" Foreground="Black" Height="30" Width="300" />
+                                <Button Name="btnChange" Content="Change" Width="70" Height="30" BorderBrush="#232A2E" BorderThickness="1" Background="#FFEA3939" Foreground="White" Margin="50,0,10,0" />
+                                <!--<TextBox Name="tab1TxtComment" Height="100" Width="500" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"/>-->
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Visibility="Visible">
+                                <Label Content="Primary Skill" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0" Visibility="Hidden">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <StackPanel Name="stkPrimarySkill" Orientation="Vertical" Visibility="Hidden">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                           
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <!--<Label Grid.Row="0" Content="Back Office" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" Margin="1,5,1,0">
+                                            <Label.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#232A2E" Offset="0"/>
+                                                    <GradientStop Color="#333" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Label.Background>
+                                        </Label>-->
+
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+
+                                            <ListBox Name="lstPrimarySkill" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
+
+                                                <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
+                                                
+
+
+                                            </ListBox>
+
+                                        </ScrollViewer>
+                                    </Grid>
+                                </StackPanel>
+                                
+                                
+
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Name="stkChange" Visibility="Hidden">
+                                <Label Content="Primary Skill" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0" Visibility="Hidden">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <Button Name="btnSet" Content="Set" Width="120" Height="30" BorderBrush="White" BorderThickness="1" Background="{x:Null}" Foreground="White" Margin="25,10,10,0"/>
+                                <Button Name="btnCncl" Content="Cancel" Width="120" Height="30" BorderBrush="White" BorderThickness="1" Background="{x:Null}" Foreground="White" Margin="5,10,10,0"/>
+                            </StackPanel>
+
                         </StackPanel>
 
                         <StackPanel Name="stkHomeSkill" Orientation="Vertical" Visibility="Collapsed">
@@ -987,7 +1056,7 @@
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                                    <ListBox Name="lstBO" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstBO" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
@@ -1015,7 +1084,7 @@
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                                    <ListBox Name="lstCHI" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstCHI" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
@@ -1036,7 +1105,7 @@
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                                    <ListBox Name="lstComm" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstComm" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
@@ -1064,7 +1133,7 @@
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" >
 
-                                                    <ListBox Name="lstConcierge" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstConcierge" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="170" Margin="5,0" FontSize="12" />
 
@@ -1091,7 +1160,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstDCS" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstDCS" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1117,7 +1186,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstGov" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstGov" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1143,7 +1212,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstIDNC" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstIDNC" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1169,7 +1238,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstKaiser" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstKaiser" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1195,7 +1264,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstRouter" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstRouter" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1214,7 +1283,7 @@
                                                 <Label Grid.Row="0" Content="Sales Support" Width="200" BorderBrush="#232A2E" BorderThickness="2" Foreground="#FFF5F3E7" Background="#FF232A2E" HorizontalContentAlignment="Center" Margin="1,5,1,0"/>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstSalesSupport" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstSalesSupport" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1240,7 +1309,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstSpecialty" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstSpecialty" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1292,7 +1361,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstSupplyAssurance" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstSupplyAssurance" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1318,7 +1387,7 @@
                                                 </Label>
 
                                                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                                    <ListBox Name="lstCET" Background="#FF35464F" OpacityMask="#FFD4A3A3" >
+                                                    <ListBox Name="lstCET" Background="{x:Null}" OpacityMask="#FFD4A3A3" >
 
                                                         <CheckBox Content="Test" Foreground="White" BorderBrush="White"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="100" Margin="5,0" />
 
@@ -1340,7 +1409,10 @@
                         <!--      LOGS      -->
 
                         <Grid Name="grdCFLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCFLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
+
+                            <telerik:RadGridView Name="gvCFLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
+
+                                <!--<telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCFLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >-->
 
                
 
@@ -1348,22 +1420,28 @@
                         </Grid>
 
                         <Grid Name="grdCHLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCHLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
+
+                            <telerik:RadGridView Name="gvChLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
+
+                                <!--<telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvCHLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >-->
 
                          
 
                             </telerik:RadGridView>
                         </Grid>
 
-                        <Grid Name="grdHSLogs" Margin="5" Visibility="Visible">
-                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvHSLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"   >
+                        <Grid Name="grdHSLogs" Margin="5" Visibility="Collapsed">
+                            <telerik:RadGridView Name="gvHSLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
+                            <!--<telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvHSLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White" BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"   >-->
 
 
                             </telerik:RadGridView>
                         </Grid>
 
                         <Grid Name="grdSPLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvSPLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >
+                            <telerik:RadGridView Name="gvSPLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
+                            
+                            <!--<telerik:RadGridView Foreground="White" Background="#232A2E" Name="gvSPLogs" Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="False" SearchPanelBackground="Transparent" SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"  >-->
 
                           
                             </telerik:RadGridView>

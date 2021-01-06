@@ -375,6 +375,8 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
+
+
     'Public Function GetAgentLogInfo(ByVal _seg As Integer) As List(Of AgentLogInfo)
 
     '    Dim temp As New List(Of AgentLogInfo)
@@ -628,13 +630,13 @@ Public Class SkillMatrixClass
 
 
     'GET LOGS'
-    Public Function GetCFLog(ByVal _EmpNo As String) As DataTable
+    Public Function GetCFLog(ByVal _temp As String) As DataTable
         Dim temp As New DataTable
 
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_CoreFunctionLog] WHERE [EmpNo]=" & _EmpNo & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_CoreFunctionLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -645,13 +647,13 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
-    Public Function GetHSLog(ByVal _EmpNo As String) As DataTable
+    Public Function GetHSLog(ByVal _temp As String) As DataTable
         Dim temp As New DataTable
 
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_HomeSkillLog] WHERE [EmpNo]=" & _EmpNo & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_HomeSkillLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -662,13 +664,13 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
-    Public Function GetCHLog(ByVal _EmpNo As String) As DataTable
+    Public Function GetCHLog(ByVal _temp As String) As DataTable
         Dim temp As New DataTable
 
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_ChannelLog] WHERE [EmpNo]=" & _EmpNo & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_ChannelLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -679,13 +681,13 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
-    Public Function GetSPLog(ByVal _EmpNo As String) As DataTable
+    Public Function GetSPLog(ByVal _temp As String) As DataTable
         Dim temp As New DataTable
 
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT DISTINCT * FROM [dbo].[vQuery_SkillPreferenceLog] WHERE [EmpNo]=" & _EmpNo & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT DISTINCT * FROM [dbo].[vQuery_SkillPreferenceLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -696,7 +698,7 @@ Public Class SkillMatrixClass
 
         If Not IsNothing(temp) Then
             Dim dt = Me.GetSkillInfo() 'skill names
-            Dim dt2 = Me.GetSPLogInfo(_EmpNo)
+            Dim dt2 = Me.GetSPTeamLogInfo(_temp)
             If dt.Rows.Count > 0 Then
                 For i = 0 To dt.Rows.Count - 1
                     temp.Columns.Add(" " & dt.Rows(i).Item("SkillName") & " ")
@@ -933,6 +935,24 @@ Public Class SkillMatrixClass
         Return temp
     End Function
 
+    Public Function GetPrimarySkillInfo(_str As String) As DataTable
+        Dim temp As New DataTable
+
+
+        If OpenMainDbConnection() = True Then
+            Dim da As New SqlDataAdapter()
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[tblAMSkill] WHERE [ID] IN " & _str & " ORDER BY [ID];", Me.gridMainDbConnection)
+            da.SelectCommand.CommandTimeout = 1000
+            Try
+                da.Fill(temp)
+            Catch ex As Exception
+            End Try
+            Me.CloseMainDbConnection()
+        End If
+
+        Return temp
+    End Function
+
     Public Function GetSPInfo(ByVal _seg As Integer) As DataTable
         Dim temp As New DataTable
 
@@ -957,6 +977,24 @@ Public Class SkillMatrixClass
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
             da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefLogView] WHERE [EmpNo]=" & _emp & ";", Me.gridMainDbConnection)
+            da.SelectCommand.CommandTimeout = 1000
+            Try
+                da.Fill(temp)
+            Catch ex As Exception
+            End Try
+            Me.CloseMainDbConnection()
+        End If
+
+        Return temp
+    End Function
+
+    Public Function GetSPTeamLogInfo(ByVal _temp As String) As DataTable
+        Dim temp As New DataTable
+
+
+        If OpenMainDbConnection() = True Then
+            Dim da As New SqlDataAdapter()
+            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefLogView] WHERE [TeamId]=" & _temp & ";", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
