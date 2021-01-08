@@ -461,7 +461,7 @@ Class MainWindow
 
             sp = sm.GetSkillPrefInfo(agentLst.item("EmpNo"))
 
-            Dim str As String
+            Dim str As String = ""
             For Each itm In sp
                 If str = "" Then
                     str = "(" & itm
@@ -521,7 +521,7 @@ Class MainWindow
             tab1CmbResearch.SelectedIndex = cf.Research
             cmbVLTrained.SelectedIndex = cf.ValueLinkTrained
             tab1TxtComment.Text = cf.Comment
-
+            lblPrimarySkill.Content = cf.PrimarySkill
 
             hs = sm.GetHSInfo(agentLst.Item("EmpNo"))
 
@@ -585,9 +585,11 @@ Class MainWindow
             tab3CmbPhone.SelectedIndex = ch.Phone
             tab3CmbEmail.SelectedIndex = ch.Email
             tab3CmbCase.SelectedIndex = ch.Cases
+            tab3CmbBackOffice.SelectedIndex = ch.BackOfficeProf
 
             tab3CmbPhonePRIO.Text = ch.PhonePrio
             tab3CmbEmailCasePrio.Text = ch.CasesEmailPrio
+            tab3CmbBackOfficePrio.Text = ch.BackOfficePrio
             tab3TxtReason.Text = ch.Reason
 
 
@@ -652,7 +654,7 @@ Class MainWindow
             tempCF.AccountMaintenance = tab1CmbAccountMaintenance.SelectedIndex
             tempCF.SpecialProcessOrders = tab1CmbSPO.SelectedIndex
             tempCF.Research = tab1CmbResearch.SelectedIndex
-
+            tempCF.PrimarySkill = lblPrimarySkill.Content
             tempCF.ValueLinkTrained = cmbVLTrained.SelectedIndex
             tempCF.Comment = tab1TxtComment.Text
 
@@ -684,14 +686,21 @@ Class MainWindow
             End If
 
         ElseIf b Then
+            If tab3CmbPhonePRIO.Text <> "P1" Or tab3CmbEmailCasePrio.Text <> "P1" Or tab3CmbBackOfficePrio.Text <> "P1" Then
+                MsgBox("Reason is required!", MsgBoxStyle.Critical, "ERROR")
+                Exit Sub
+            End If
+
             tempCH.EmpNo = _EmpNo
             tempCH.Router = tab3CmbRouter.SelectedIndex
             tempCH.Phone = tab3CmbPhone.SelectedIndex
             tempCH.Email = tab3CmbEmail.SelectedIndex
             tempCH.Cases = tab3CmbCase.SelectedIndex
+            tempCH.BackOfficeProf = tab3CmbBackOffice.SelectedIndex
 
             tempCH.PhonePrio = tab3CmbPhonePRIO.Text
             tempCH.CasesEmailPrio = tab3CmbEmailCasePrio.Text
+            tempCH.BackOfficePrio = tab3CmbBackOfficePrio.Text
             tempCH.Reason = tab3TxtReason.Text
 
             CH = sm.SaveCHInfo(tempCH)
@@ -1172,375 +1181,485 @@ Class MainWindow
     End Sub
 
     Private Sub btnApprove_Click(sender As Object, e As RoutedEventArgs) Handles btnApprove.Click
-        Dim agentLst
-        Dim drCF, drHS, drCH, drSP
+        'Dim agentLst
+        'Dim drCF, drHS, drCH, drSP
+        'agentLst = gvAgents.SelectedItem
 
-        agentLst = gvAgents.SelectedItem
+        Dim n As Integer
 
-        Dim _id As Integer
-        Dim tempCF = New CoreFunctionInfo
         Dim tempHS = New HomeSkillInfo
         Dim tempCH = New ChannelInfo
         Dim tempSP = New List(Of SkillPreference)
         Dim tempSP2 As New SkillPreference
-        Dim _EmpNo = agentLst.Item("EmpNo")
+        'Dim _EmpNo = agentLst.Item("EmpNo")
 
         Dim CF, HS, CH, SP As Boolean
 
         If a Then
-            drCF = gvCFLogs.SelectedItem
-            tempCF.EmpNo = _EmpNo
-            If drCF.Item("Order Process") = "" Then
-                tempCF.OrderProcess = 0
-            ElseIf drCF.Item("Order Process") = "New" Then
-                tempCF.OrderProcess = 1
-            ElseIf drCF.Item("Order Process") = "Emerging" Then
-                tempCF.OrderProcess = 2
-            ElseIf drCF.Item("Order Process") = "Stable" Then
-                tempCF.OrderProcess = 3
+            'drCF = gvCFLogs.SelectedItems
+            n = 0
+            'For Each itm In drCF
+            '    _lstId.Add(drCF.Item("ID"))
+            'Next
+
+
+            'For i = 0 To gvCFLogs.SelectedItems.Count - 1
+            '    Dim obj As DataRow = gvCFLogs.SelectedItems(i)
+            '    _lstId.Add(
+
+            '    obj.Item("ResearchType") = cmbResearchType.Text
+            '    obj.Item("Status") = cmbStatus.Text
+            '    obj.Item("Notes") = txtNotes.Text
+            '    obj.Item("PurchaseOrder") = txtPONo.Text
+            '    obj.Item("GLorCostCenter") = txtGLorCostCenter.Text
+            '    gvAudits.SelectedItems(i) = obj
+            'Next
+
+
+
+
+            For i = 0 To gvCFLogs.SelectedItems.Count - 1
+                Dim obj As DataRowView = gvCFLogs.SelectedItems(i)
+                Dim tempCF = New CoreFunctionInfo
+
+                tempCF.EmpNo = obj.Item("EmpNo")
+                If obj.Item("Order Process") = "" Then
+                    tempCF.OrderProcess = 0
+                ElseIf obj.Item("Order Process") = "New" Then
+                    tempCF.OrderProcess = 1
+                ElseIf obj.Item("Order Process") = "Emerging" Then
+                    tempCF.OrderProcess = 2
+                ElseIf obj.Item("Order Process") = "Stable" Then
+                    tempCF.OrderProcess = 3
+                Else
+                    tempCF.OrderProcess = 4
+                End If
+
+                If obj.Item("Credit") = "" Then
+                    tempCF.Credit = 0
+                ElseIf obj.Item("Credit") = "New" Then
+                    tempCF.Credit = 1
+                ElseIf obj.Item("Credit") = "Emerging" Then
+                    tempCF.Credit = 2
+                ElseIf obj.Item("Credit") = "Stable" Then
+                    tempCF.Credit = 3
+                Else
+                    tempCF.Credit = 4
+                End If
+
+                If obj.Item("Rebill") = "" Then
+                    tempCF.Rebill = 0
+                ElseIf obj.Item("Rebill") = "New" Then
+                    tempCF.Rebill = 1
+                ElseIf obj.Item("Rebill") = "Emerging" Then
+                    tempCF.Rebill = 2
+                ElseIf obj.Item("Rebill") = "Stable" Then
+                    tempCF.Rebill = 3
+                Else
+                    tempCF.Rebill = 4
+                End If
+
+                If obj.Item("Returns") = "" Then
+                    tempCF.Returns = 0
+                ElseIf obj.Item("Returns") = "New" Then
+                    tempCF.Returns = 1
+                ElseIf obj.Item("Returns") = "Emerging" Then
+                    tempCF.Returns = 2
+                ElseIf obj.Item("Returns") = "Stable" Then
+                    tempCF.Returns = 3
+                Else
+                    tempCF.Returns = 4
+                End If
+
+                If obj.Item("Complaints") = "" Then
+                    tempCF.Complaints = 0
+                ElseIf obj.Item("Complaints") = "New" Then
+                    tempCF.Complaints = 1
+                ElseIf obj.Item("Complaints") = "Emerging" Then
+                    tempCF.Complaints = 2
+                ElseIf obj.Item("Complaints") = "Stable" Then
+                    tempCF.Complaints = 3
+                Else
+                    tempCF.Complaints = 4
+                End If
+
+                If obj.Item("Pricing Product") = "" Then
+                    tempCF.PricingProduct = 0
+                ElseIf obj.Item("Pricing Product") = "New" Then
+                    tempCF.PricingProduct = 1
+                ElseIf obj.Item("Pricing Product") = "Emerging" Then
+                    tempCF.PricingProduct = 2
+                ElseIf obj.Item("Pricing Product") = "Stable" Then
+                    tempCF.PricingProduct = 3
+                Else
+                    tempCF.PricingProduct = 4
+                End If
+
+                If obj.Item("Shipping Discrepancy") = "" Then
+                    tempCF.ShippingDiscrepancy = 0
+                ElseIf obj.Item("Shipping Discrepancy") = "New" Then
+                    tempCF.ShippingDiscrepancy = 1
+                ElseIf obj.Item("Shipping Discrepancy") = "Emerging" Then
+                    tempCF.ShippingDiscrepancy = 2
+                ElseIf obj.Item("Shipping Discrepancy") = "Stable" Then
+                    tempCF.ShippingDiscrepancy = 3
+                Else
+                    tempCF.ShippingDiscrepancy = 4
+                End If
+
+                If obj.Item("Document Request") = "" Then
+                    tempCF.DocumentRequests = 0
+                ElseIf obj.Item("Document Request") = "New" Then
+                    tempCF.DocumentRequests = 1
+                ElseIf obj.Item("Document Request") = "Emerging" Then
+                    tempCF.DocumentRequests = 2
+                ElseIf obj.Item("Document Request") = "Stable" Then
+                    tempCF.DocumentRequests = 3
+                Else
+                    tempCF.DocumentRequests = 4
+                End If
+
+                If obj.Item("Implementation") = "" Then
+                    tempCF.Implementation = 0
+                ElseIf obj.Item("Implementation") = "New" Then
+                    tempCF.Implementation = 1
+                ElseIf obj.Item("Implementation") = "Emerging" Then
+                    tempCF.Implementation = 2
+                ElseIf obj.Item("Implementation") = "Stable" Then
+                    tempCF.Implementation = 3
+                Else
+                    tempCF.Implementation = 4
+                End If
+
+                If obj.Item("CarrierDisposition") = "" Then
+                    tempCF.CarrierDisposition = 0
+                ElseIf obj.Item("CarrierDisposition") = "New" Then
+                    tempCF.CarrierDisposition = 1
+                ElseIf obj.Item("CarrierDisposition") = "Emerging" Then
+                    tempCF.CarrierDisposition = 2
+                ElseIf obj.Item("CarrierDisposition") = "Stable" Then
+                    tempCF.CarrierDisposition = 3
+                Else
+                    tempCF.CarrierDisposition = 4
+                End If
+
+
+                If obj.Item("AccountMaintenance") = "" Then
+                    tempCF.AccountMaintenance = 0
+                ElseIf obj.Item("AccountMaintenance") = "New" Then
+                    tempCF.AccountMaintenance = 1
+                ElseIf obj.Item("AccountMaintenance") = "Emerging" Then
+                    tempCF.AccountMaintenance = 2
+                ElseIf obj.Item("AccountMaintenance") = "Stable" Then
+                    tempCF.AccountMaintenance = 3
+                Else
+                    tempCF.AccountMaintenance = 4
+                End If
+
+                If obj.Item("SpecialProcessOrders") = "" Then
+                    tempCF.SpecialProcessOrders = 0
+                ElseIf obj.Item("SpecialProcessOrders") = "New" Then
+                    tempCF.SpecialProcessOrders = 1
+                ElseIf obj.Item("SpecialProcessOrders") = "Emerging" Then
+                    tempCF.SpecialProcessOrders = 2
+                ElseIf obj.Item("SpecialProcessOrders") = "Stable" Then
+                    tempCF.SpecialProcessOrders = 3
+                Else
+                    tempCF.SpecialProcessOrders = 4
+                End If
+
+                If obj.Item("Research") = "" Then
+                    tempCF.Research = 0
+                ElseIf obj.Item("Research") = "New" Then
+                    tempCF.Research = 1
+                ElseIf obj.Item("Research") = "Emerging" Then
+                    tempCF.Research = 2
+                ElseIf obj.Item("Research") = "Stable" Then
+                    tempCF.Research = 3
+                Else
+                    tempCF.Research = 4
+                End If
+
+                If obj.Item("ValueLinkTrained") = "No" Then
+                    tempCF.ValueLinkTrained = 0
+                Else
+                    tempCF.ValueLinkTrained = 1
+                End If
+                tempCF.PrimarySkill = obj.Item("PrimarySkill")
+                tempCF.Comment = obj.Item("Comment")
+                tempCF.ModifiedBy = obj.Item("ModifiedBy")
+                tempCF.ModifiedDate = obj.Item("ModifiedDate")
+
+                CF = sm.SaveCFLog(tempCF, obj.Item("Id"))
+                If CF Then
+                    n += 1
+                End If
+
+            Next
+
+            Dim str As String
+            If n > 1 Then
+                str = " Item"
             Else
-                tempCF.OrderProcess = 4
+                str = " Items"
             End If
 
-            If drCF.Item("Credit") = "" Then
-                tempCF.Credit = 0
-            ElseIf drCF.Item("Credit") = "New" Then
-                tempCF.Credit = 1
-            ElseIf drCF.Item("Credit") = "Emerging" Then
-                tempCF.Credit = 2
-            ElseIf drCF.Item("Credit") = "Stable" Then
-                tempCF.Credit = 3
-            Else
-                tempCF.Credit = 4
-            End If
+            'tempCF.EmpNo = _EmpNo
 
-            If drCF.Item("Rebill") = "" Then
-                tempCF.Rebill = 0
-            ElseIf drCF.Item("Rebill") = "New" Then
-                tempCF.Rebill = 1
-            ElseIf drCF.Item("Rebill") = "Emerging" Then
-                tempCF.Rebill = 2
-            ElseIf drCF.Item("Rebill") = "Stable" Then
-                tempCF.Rebill = 3
-            Else
-                tempCF.Rebill = 4
-            End If
-
-            If drCF.Item("Returns") = "" Then
-                tempCF.Returns = 0
-            ElseIf drCF.Item("Returns") = "New" Then
-                tempCF.Returns = 1
-            ElseIf drCF.Item("Returns") = "Emerging" Then
-                tempCF.Returns = 2
-            ElseIf drCF.Item("Returns") = "Stable" Then
-                tempCF.Returns = 3
-            Else
-                tempCF.Returns = 4
-            End If
-
-            If drCF.Item("Complaints") = "" Then
-                tempCF.Complaints = 0
-            ElseIf drCF.Item("Complaints") = "New" Then
-                tempCF.Complaints = 1
-            ElseIf drCF.Item("Complaints") = "Emerging" Then
-                tempCF.Complaints = 2
-            ElseIf drCF.Item("Complaints") = "Stable" Then
-                tempCF.Complaints = 3
-            Else
-                tempCF.Complaints = 4
-            End If
-
-            If drCF.Item("Pricing Product") = "" Then
-                tempCF.PricingProduct = 0
-            ElseIf drCF.Item("Pricing Product") = "New" Then
-                tempCF.PricingProduct = 1
-            ElseIf drCF.Item("Pricing Product") = "Emerging" Then
-                tempCF.PricingProduct = 2
-            ElseIf drCF.Item("Pricing Product") = "Stable" Then
-                tempCF.PricingProduct = 3
-            Else
-                tempCF.PricingProduct = 4
-            End If
-
-            If drCF.Item("Shipping Discrepancy") = "" Then
-                tempCF.ShippingDiscrepancy = 0
-            ElseIf drCF.Item("Shipping Discrepancy") = "New" Then
-                tempCF.ShippingDiscrepancy = 1
-            ElseIf drCF.Item("Shipping Discrepancy") = "Emerging" Then
-                tempCF.ShippingDiscrepancy = 2
-            ElseIf drCF.Item("Shipping Discrepancy") = "Stable" Then
-                tempCF.ShippingDiscrepancy = 3
-            Else
-                tempCF.ShippingDiscrepancy = 4
-            End If
-
-            If drCF.Item("Document Request") = "" Then
-                tempCF.DocumentRequests = 0
-            ElseIf drCF.Item("Document Request") = "New" Then
-                tempCF.DocumentRequests = 1
-            ElseIf drCF.Item("Document Request") = "Emerging" Then
-                tempCF.DocumentRequests = 2
-            ElseIf drCF.Item("Document Request") = "Stable" Then
-                tempCF.DocumentRequests = 3
-            Else
-                tempCF.DocumentRequests = 4
-            End If
-
-            If drCF.Item("Implementation") = "" Then
-                tempCF.Implementation = 0
-            ElseIf drCF.Item("Implementation") = "New" Then
-                tempCF.Implementation = 1
-            ElseIf drCF.Item("Implementation") = "Emerging" Then
-                tempCF.Implementation = 2
-            ElseIf drCF.Item("Implementation") = "Stable" Then
-                tempCF.Implementation = 3
-            Else
-                tempCF.Implementation = 4
-            End If
-
-            If drCF.Item("CarrierDisposition") = "" Then
-                tempCF.CarrierDisposition = 0
-            ElseIf drCF.Item("CarrierDisposition") = "New" Then
-                tempCF.CarrierDisposition = 1
-            ElseIf drCF.Item("CarrierDisposition") = "Emerging" Then
-                tempCF.CarrierDisposition = 2
-            ElseIf drCF.Item("CarrierDisposition") = "Stable" Then
-                tempCF.CarrierDisposition = 3
-            Else
-                tempCF.CarrierDisposition = 4
-            End If
+            'If CF Then
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
 
 
-            If drCF.Item("AccountMaintenance") = "" Then
-                tempCF.AccountMaintenance = 0
-            ElseIf drCF.Item("AccountMaintenance") = "New" Then
-                tempCF.AccountMaintenance = 1
-            ElseIf drCF.Item("AccountMaintenance") = "Emerging" Then
-                tempCF.AccountMaintenance = 2
-            ElseIf drCF.Item("AccountMaintenance") = "Stable" Then
-                tempCF.AccountMaintenance = 3
-            Else
-                tempCF.AccountMaintenance = 4
-            End If
+            a = 0
+            b = 1
+            c = 0
+            d = 0
+            tabCHL.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
 
-            If drCF.Item("SpecialProcessOrders") = "" Then
-                tempCF.SpecialProcessOrders = 0
-            ElseIf drCF.Item("SpecialProcessOrders") = "New" Then
-                tempCF.SpecialProcessOrders = 1
-            ElseIf drCF.Item("SpecialProcessOrders") = "Emerging" Then
-                tempCF.SpecialProcessOrders = 2
-            ElseIf drCF.Item("SpecialProcessOrders") = "Stable" Then
-                tempCF.SpecialProcessOrders = 3
-            Else
-                tempCF.SpecialProcessOrders = 4
-            End If
+            tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
 
+            grdCFLogs.Visibility = Visibility.Visible
+            grdHSLogs.Visibility = Visibility.Hidden
+            grdCHLogs.Visibility = Visibility.Hidden
+            grdSPLogs.Visibility = Visibility.Hidden
 
-            If drCF.Item("Research") = "" Then
-                tempCF.Research = 0
-            ElseIf drCF.Item("Research") = "New" Then
-                tempCF.Research = 1
-            ElseIf drCF.Item("Research") = "Emerging" Then
-                tempCF.Research = 2
-            ElseIf drCF.Item("Research") = "Stable" Then
-                tempCF.Research = 3
-            Else
-                tempCF.Research = 4
-            End If
-
-            If drCF.Item("ValueLinkTrained") = "No" Then
-                tempCF.ValueLinkTrained = 0
-            Else
-                tempCF.ValueLinkTrained = 1
-            End If
-
-            tempCF.Comment = drCF.Item("Comment")
-            tempCF.ModifiedBy = drCF.Item("ModifiedBy")
-            tempCF.ModifiedDate = drCF.Item("ModifiedDate")
-            _id = drCF.Item("Id")
-            CF = sm.SaveCFLog(tempCF, _id)
-            If CF Then
-                MsgBox("Core Business Function Updated")
-                gvCFLogs.ItemsSource = sm.GetCFLog(tempCF.EmpNo).DefaultView
-                a = 0
-                b = 1
-                c = 0
-                d = 0
-                tabCHL.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-
-                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-
-                grdCFLogs.Visibility = Visibility.Visible
-                grdHSLogs.Visibility = Visibility.Hidden
-                grdCHLogs.Visibility = Visibility.Hidden
-                grdSPLogs.Visibility = Visibility.Hidden
-
-            Else
-                MsgBox("Failed Saving Core Business Function")
-            End If
+            'Else
+            '    MsgBox("Failed Saving Core Business Function")
+            'End If
 
         ElseIf b Then
-            drCH = gvCHLogs.SelectedItem
-            tempCH.EmpNo = _EmpNo
-            If drCH.Item("Router") = "" Then
-                tempCH.Router = 0
-            ElseIf drCH.Item("Router") = "New" Then
-                tempCH.Router = 1
-            ElseIf drCH.Item("Router") = "Emerging" Then
-                tempCH.Router = 2
-            ElseIf drCH.Item("Router") = "Stable" Then
-                tempCH.Router = 3
+            n = 0
+            For i = 0 To gvChLogs.SelectedItems.Count - 1
+                Dim obj As DataRowView = gvChLogs.SelectedItems(i)
+                tempCH.EmpNo = obj.Item("EmpNo")
+
+                If obj.Item("Router") = "" Then
+                    tempCH.Router = 0
+                ElseIf obj.Item("Router") = "New" Then
+                    tempCH.Router = 1
+                ElseIf obj.Item("Router") = "Emerging" Then
+                    tempCH.Router = 2
+                ElseIf obj.Item("Router") = "Stable" Then
+                    tempCH.Router = 3
+                Else
+                    tempCH.Router = 4
+                End If
+
+                If obj.Item("Phone") = "" Then
+                    tempCH.Phone = 0
+                ElseIf obj.Item("Phone") = "New" Then
+                    tempCH.Phone = 1
+                ElseIf obj.Item("Phone") = "Emerging" Then
+                    tempCH.Phone = 2
+                ElseIf obj.Item("Phone") = "Stable" Then
+                    tempCH.Phone = 3
+                Else
+                    tempCH.Phone = 4
+                End If
+
+                If obj.Item("Email") = "" Then
+                    tempCH.Email = 0
+                ElseIf obj.Item("Email") = "New" Then
+                    tempCH.Email = 1
+                ElseIf obj.Item("Email") = "Emerging" Then
+                    tempCH.Email = 2
+                ElseIf obj.Item("Email") = "Stable" Then
+                    tempCH.Email = 3
+                Else
+                    tempCH.Email = 4
+                End If
+
+                If obj.Item("Cases") = "" Then
+                    tempCH.Cases = 0
+                ElseIf obj.Item("Cases") = "New" Then
+                    tempCH.Cases = 1
+                ElseIf obj.Item("Cases") = "Emerging" Then
+                    tempCH.Cases = 2
+                ElseIf obj.Item("Cases") = "Stable" Then
+                    tempCH.Cases = 3
+                Else
+                    tempCH.Cases = 4
+                End If
+
+                If obj.Item("BackOffice") = "" Then
+                    tempCH.Cases = 0
+                ElseIf obj.Item("BackOffice") = "New" Then
+                    tempCH.Cases = 1
+                ElseIf obj.Item("BackOffice") = "Emerging" Then
+                    tempCH.Cases = 2
+                ElseIf obj.Item("BackOffice") = "Stable" Then
+                    tempCH.Cases = 3
+                Else
+                    tempCH.Cases = 4
+                End If
+
+                tempCH.PhonePrio = obj.Item("PhonePrio")
+                tempCH.CasesEmailPrio = obj.Item("CasesEmailPrio")
+                tempCH.BackOfficePrio = obj.Item("BackOfficePrio")
+                tempCH.Reason = obj.Item("Reason")
+                tempCH.ModifiedBy = obj.Item("ModifiedBy")
+                tempCH.ModifiedDate = obj.Item("ModifiedDate")
+                CH = sm.SaveCHLog(tempCH, obj.Item("Id"))
+                If CH Then
+                    n += 1
+                End If
+            Next
+            Dim str As String
+            If n > 1 Then
+                str = " Items"
             Else
-                tempCH.Router = 4
+                str = " Item"
             End If
+            'drCH = gvChLogs.SelectedItem
+            'tempCH.EmpNo = _EmpNo
 
-            If drCH.Item("Phone") = "" Then
-                tempCH.Phone = 0
-            ElseIf drCH.Item("Phone") = "New" Then
-                tempCH.Phone = 1
-            ElseIf drCH.Item("Phone") = "Emerging" Then
-                tempCH.Phone = 2
-            ElseIf drCH.Item("Phone") = "Stable" Then
-                tempCH.Phone = 3
-            Else
-                tempCH.Phone = 4
-            End If
+            'If CH Then
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            gvChLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
 
-            If drCH.Item("Email") = "" Then
-                tempCH.Email = 0
-            ElseIf drCH.Item("Email") = "New" Then
-                tempCH.Email = 1
-            ElseIf drCH.Item("Email") = "Emerging" Then
-                tempCH.Email = 2
-            ElseIf drCH.Item("Email") = "Stable" Then
-                tempCH.Email = 3
-            Else
-                tempCH.Email = 4
-            End If
 
-            If drCH.Item("Cases") = "" Then
-                tempCH.Cases = 0
-            ElseIf drCH.Item("Cases") = "New" Then
-                tempCH.Cases = 1
-            ElseIf drCH.Item("Cases") = "Emerging" Then
-                tempCH.Cases = 2
-            ElseIf drCH.Item("Cases") = "Stable" Then
-                tempCH.Cases = 3
-            Else
-                tempCH.Cases = 4
-            End If
+            a = 0
+            b = 0
+            c = 1
+            d = 0
 
-            tempCH.PhonePrio = drCH.Item("PhonePrio")
-            tempCH.CasesEmailPrio = drCH.Item("CasesEmailPrio")
-            tempCH.Reason = drCH.Item("Reason")
-            tempCH.ModifiedBy = drCH.Item("ModifiedBy")
-            tempCH.ModifiedDate = drCH.Item("ModifiedDate")
-            _id = drCH.Item("Id")
-            CH = sm.SaveCHLog(tempCH, _id)
-            If CH Then
-                MsgBox("Channel Updated")
-                gvCHLogs.ItemsSource = sm.GetCHLog(tempCH.EmpNo).DefaultView
-                a = 0
-                b = 0
-                c = 1
-                d = 0
-                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            tabHSkill.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
 
-                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
 
 
 
-                grdCFLogs.Visibility = Visibility.Hidden
-                grdHSLogs.Visibility = Visibility.Visible
-                grdCHLogs.Visibility = Visibility.Hidden
-                grdSPLogs.Visibility = Visibility.Hidden
+            grdCFLogs.Visibility = Visibility.Hidden
+            grdHSLogs.Visibility = Visibility.Visible
+            grdCHLogs.Visibility = Visibility.Hidden
+            grdSPLogs.Visibility = Visibility.Hidden
 
-            Else
-                MsgBox("Failed Saving Saving Channel")
-            End If
+            'Else
+            '    MsgBox("Failed Saving Saving Channel")
+            'End If
 
 
         ElseIf c Then
-            drHS = gvHSLogs.SelectedItem
-            tempHS.EmpNo = _EmpNo
-            tempHS.BackOffice = drHS.Item("BackOffice")
-            tempHS.CHI = drHS.Item("CHI")
-            tempHS.Commercial = drHS.Item("Commercial")
-            tempHS.Concierge = drHS.Item("Concierge")
-            tempHS.Commercial = drHS.Item("Commercial")
-            tempHS.DCS = drHS.Item("DCS")
-            tempHS.GOV = drHS.Item("GOV")
-            tempHS.IDNC = drHS.Item("IDNC")
-            tempHS.Kaiser = drHS.Item("Kaiser")
-            tempHS.Router = drHS.Item("Router")
-            tempHS.SalesSupport = drHS.Item("SalesSupport")
-            tempHS.Specialty = drHS.Item("Specialty")
-            tempHS.Tradex = drHS.Item("Tradex")
-            tempHS.SupplyAssurance = drHS.Item("SupplyAssurance")
-            tempHS.CET = drHS.Item("CET")
-            tempHS.ModifiedBy = drHS.Item("ModifiedBy")
-            tempHS.ModifiedDate = drHS.Item("ModifiedDate")
-            _id = drHS.Item("Id")
-            HS = sm.SaveHSLog(tempHS, _id)
-            If HS Then
-                gvHSLogs.ItemsSource = sm.GetCHLog(tempHS.EmpNo).DefaultView
-                MsgBox("Sucess Saving Home Skill")
-                a = 0
-                b = 0
-                c = 0
-                d = 1
-                tabSS.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
-                tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            n = 0
+            For i = 0 To gvChLogs.SelectedItems.Count - 1
+                Dim obj As DataRowView = gvChLogs.SelectedItems(i)
 
-                tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
-                tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+                tempHS.EmpNo = obj.Item("EmpNo")
+                tempHS.BackOffice = obj.Item("BackOffice")
+                tempHS.CHI = obj.Item("CHI")
+                tempHS.Commercial = obj.Item("Commercial")
+                tempHS.Concierge = obj.Item("Concierge")
+                tempHS.Commercial = obj.Item("Commercial")
+                tempHS.DCS = obj.Item("DCS")
+                tempHS.GOV = obj.Item("GOV")
+                tempHS.IDNC = obj.Item("IDNC")
+                tempHS.Kaiser = obj.Item("Kaiser")
+                tempHS.Router = obj.Item("Router")
+                tempHS.SalesSupport = obj.Item("SalesSupport")
+                tempHS.Specialty = obj.Item("Specialty")
+                tempHS.Tradex = obj.Item("Tradex")
+                tempHS.SupplyAssurance = obj.Item("SupplyAssurance")
+                tempHS.CET = obj.Item("CET")
+                tempHS.ModifiedBy = obj.Item("ModifiedBy")
+                tempHS.ModifiedDate = obj.Item("ModifiedDate")
+
+                HS = sm.SaveHSLog(tempHS, obj.Item("Id"))
+
+                If HS Then
+                    n += 1
+                End If
+            Next
 
 
-
-                grdCFLogs.Visibility = Visibility.Hidden
-                grdHSLogs.Visibility = Visibility.Hidden
-                grdCHLogs.Visibility = Visibility.Hidden
-                grdSPLogs.Visibility = Visibility.Visible
-
+            Dim str As String
+            If n > 1 Then
+                str = " Item"
             Else
-                MsgBox("Failed Saving Home Skill")
+                str = " Items"
             End If
+
+            'drHS = gvHSLogs.SelectedItem
+            ''tempHS.EmpNo = _EmpNo
+
+            'If HS Then
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            gvHSLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
+
+            a = 0
+            b = 0
+            c = 0
+            d = 1
+            tabSS.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+            tabSS.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
+
+            tabCBF.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabHSkill.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCHL.Background = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+            tabCHL.BorderBrush = New SolidColorBrush(Color.FromRgb(35, 42, 46))
+
+
+
+            grdCFLogs.Visibility = Visibility.Hidden
+            grdHSLogs.Visibility = Visibility.Hidden
+            grdCHLogs.Visibility = Visibility.Hidden
+            grdSPLogs.Visibility = Visibility.Visible
+
+            'Else
+            'MsgBox("Failed Saving Home Skill")
+            'End If
 
         ElseIf d Then
+            n = 0
+            For i = 0 To gvChLogs.SelectedItems.Count - 1
+                Dim obj As DataRowView = gvChLogs.SelectedItems(i)
 
-            drSP = gvSPLogs.SelectedItem
-            tempSP2.EmpNo = _EmpNo
-            tempSP2.ModifiedBy = drSP.Item("ModifiedBy")
-            tempSP2.ModifiedDate = drSP.Item("ModifiedDate")
-            SP = sm.SaveSPLog(tempSP2)
+                tempSP2.EmpNo = obj.Item("EmpNo")
 
-            If SP Then
-                MsgBox("Sucess Saving Skill Preference")
-
-                grdSearch.Visibility = Visibility.Visible
-                grdEdit.Visibility = Visibility.Collapsed
-                grdNameInfo.Visibility = Visibility.Collapsed
+                tempSP2.ModifiedBy = obj.Item("ModifiedBy")
+                tempSP2.ModifiedDate = obj.Item("ModifiedDate")
+                SP = sm.SaveSPLog(tempSP2)
+                If HS Then
+                    n += 1
+                End If
+            Next
 
 
-                gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
-                'gvAgents.Columns("EmpNo").IsVisible = False
+            Dim str As String
+            If n > 1 Then
+                str = " Item"
+            Else
+                str = " Items"
             End If
+
+
+
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+
+            grdSearch.Visibility = Visibility.Visible
+            grdEdit.Visibility = Visibility.Collapsed
+            grdNameInfo.Visibility = Visibility.Collapsed
+
+
+            load()
+
+            'gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
+            'gvAgents.Columns("EmpNo").IsVisible = False
+
 
         End If
 

@@ -760,7 +760,7 @@ Public Class SkillMatrixClass
                     temp.AccountMaintenance = If(IsDBNull(dr.Item("AccountMaintenance")), 0, dr.Item("AccountMaintenance"))
                     temp.SpecialProcessOrders = If(IsDBNull(dr.Item("SpecialProcessOrders")), 0, dr.Item("SpecialProcessOrders"))
                     temp.Research = If(IsDBNull(dr.Item("Research")), 0, dr.Item("Research"))
-
+                    temp.PrimarySkill = If(IsDBNull(dr.Item("PrimarySkill")), "", dr.Item("PrimarySkill"))
                     temp.ValueLinkTrained = If(IsDBNull(dr.Item("ValueLinkTrained")), 0, dr.Item("ValueLinkTrained"))
                     temp.Comment = If(IsDBNull(dr.Item("Comment")), "", dr.Item("Comment"))
                 End While
@@ -855,9 +855,11 @@ Public Class SkillMatrixClass
                     temp.Phone = If(IsDBNull(dr.Item("Phone")), 0, dr.Item("Phone"))
                     temp.Email = If(IsDBNull(dr.Item("Email")), 0, dr.Item("Email"))
                     temp.Cases = If(IsDBNull(dr.Item("Cases")), 0, dr.Item("Cases"))
+                    temp.Cases = If(IsDBNull(dr.Item("BackOffice")), 0, dr.Item("BackOffice"))
 
                     temp.PhonePrio = If(IsDBNull(dr.Item("PhonePrio")), "", dr.Item("PhonePrio"))
                     temp.CasesEmailPrio = If(IsDBNull(dr.Item("CasesEmailPrio")), "", dr.Item("CasesEmailPrio"))
+                    temp.BackOfficePrio = If(IsDBNull(dr.Item("BackOfficePrio")), "", dr.Item("BackOfficePrio"))
                     temp.Reason = If(IsDBNull(dr.Item("Reason")), "", dr.Item("Reason"))
                 End While
 
@@ -1030,7 +1032,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@AccountMaintenance", _temp.AccountMaintenance)
             Me.gridMainDbCommand.Parameters.AddWithValue("@SpecialProcessOrders", _temp.SpecialProcessOrders)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Research", _temp.Research)
-
+            Me.gridMainDbCommand.Parameters.AddWithValue("@PrimarySkill", _temp.PrimarySkill)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ValueLinkTrained", _temp.ValueLinkTrained)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Comment", _temp.Comment)
@@ -1045,7 +1047,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", "")
 
 
-            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunctionLog] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[ValueLinkTrained],[Comment],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@ValueLinkTrained,@Comment,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
+            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunctionLog] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Comment],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained,@Comment,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
 
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
@@ -1132,9 +1134,11 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@Phone", _temp.Phone)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Email", _temp.Email)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Cases", _temp.Cases)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOffice", _temp.BackOfficeProf)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@PhonePrio", _temp.PhonePrio)
             Me.gridMainDbCommand.Parameters.AddWithValue("@CasesEmailPrio", _temp.CasesEmailPrio)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOfficePrio", _temp.BackOfficePrio)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Reason", _temp.Reason)
 
 
@@ -1147,7 +1151,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", "")
 
 
-            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMChannelLog] ([EmpNo],[Router],[Phone],[Email],[Cases],[Action],[PhonePrio],[CasesEmailPrio],[Reason],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@Router,@Phone,@Email,@Cases,@Action,@PhonePrio,@CasesEmailPrio,@Reason,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
+            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMChannelLog] ([EmpNo],[Router],[Phone],[Email],[Cases],[BackOffice],[Action],[PhonePrio],[CasesEmailPrio],[BackOfficePrio],[Reason],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@Router,@Phone,@Email,@Cases,@BackOffice,@Action,@PhonePrio,@CasesEmailPrio,@BackOfficePrio,@Reason,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
 
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
@@ -1222,10 +1226,6 @@ Public Class SkillMatrixClass
     Public Function SaveCFLog(ByVal _temp As CoreFunctionInfo, ByVal _Id As Integer) As Boolean
         Dim temp As Boolean
         If OpenMainDbConnection() Then
-
-
-
-
             Me.gridMainDbCommand.Parameters.Clear()
             Me.gridMainDbCommand.Parameters.AddWithValue("@EmpNo", _temp.EmpNo)
             Me.gridMainDbCommand.Parameters.AddWithValue("@OrderProcess", _temp.OrderProcess)
@@ -1241,6 +1241,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@AccountMaintenance", _temp.AccountMaintenance)
             Me.gridMainDbCommand.Parameters.AddWithValue("@SpecialProcessOrders", _temp.SpecialProcessOrders)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Research", _temp.Research)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@PrimarySkill", _temp.PrimarySkill)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ValueLinkTrained", _temp.ValueLinkTrained)
 
@@ -1254,18 +1255,18 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
 
-            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Date.Now)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
-            Me.gridMainDbCommand.Parameters.AddWithValue("@LastModifiedDate", Date.Now)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@LastModifiedDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
 
             gridMainDbCommand.CommandText = "SELECT * FROM [dbo].[tblAMCoreFunction] WHERE [EmpNo]=@EmpNo;"
 
             Dim dr As SqlDataReader = gridMainDbCommand.ExecuteReader
 
             If dr.Read Then
-                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunction] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,ValueLinkTrained=@ValueLinkTrained,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Comment=@Comment WHERE EmpNo=@EmpNo;"
+                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunction] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,ValueLinkTrained=@ValueLinkTrained,PrimarySkill=@PrimarySkill,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Comment=@Comment WHERE EmpNo=@EmpNo;"
             Else
-                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunction] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[ValueLinkTrained],[Comment],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate],[LastModifiedDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@ValueLinkTrained,@Comment,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate,@LastModifiedDate)"
+                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunction] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Comment],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate],[LastModifiedDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained,@Comment,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate,@LastModifiedDate)"
             End If
 
             dr.Close()
@@ -1275,7 +1276,7 @@ Public Class SkillMatrixClass
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
                     temp = True
-                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunctionLog] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,ValueLinkTrained=@ValueLinkTrained,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Action=@Action WHERE Id=" & _Id & ";"
+                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunctionLog] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,PrimarySkill=@PrimarySkill,ValueLinkTrained=@ValueLinkTrained,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Action=@Action WHERE Id=" & _Id & ";"
                     Me.gridMainDbCommand.ExecuteNonQuery()
                 End If
             Catch ex As Exception
@@ -1323,7 +1324,7 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
 
-            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Date.Now())
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
 
 
@@ -1375,9 +1376,11 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@Phone", _temp.Phone)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Email", _temp.Email)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Cases", _temp.Cases)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOffice", _temp.BackOfficeProf)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@PhonePrio", _temp.PhonePrio)
             Me.gridMainDbCommand.Parameters.AddWithValue("@CasesEmailPrio", _temp.CasesEmailPrio)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@BackOfficePrio", _temp.BackOfficePrio)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Reason", _temp.Reason)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ModifiedBy", _temp.ModifiedBy)
@@ -1386,7 +1389,7 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
 
-            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Date.Now())
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
 
 
@@ -1396,9 +1399,9 @@ Public Class SkillMatrixClass
             Dim dr As SqlDataReader = gridMainDbCommand.ExecuteReader
 
             If dr.Read Then
-                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMChannel] SET Router=@Router,Phone=@Phone,Email=@Email,Cases=@Cases,PhonePrio=@PhonePrio,CasesEmailPrio=@CasesEmailPrio,Reason=@Reason WHERE EmpNo=@EmpNo;"
+                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMChannel] SET Router=@Router,Phone=@Phone,Email=@Email,Cases=@Cases,BackOffice=@BackOffice,PhonePrio=@PhonePrio,CasesEmailPrio=@CasesEmailPrio,BackOfficePrio=@BackOfficePrio,Reason=@Reason WHERE EmpNo=@EmpNo;"
             Else
-                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMChannel] ([EmpNo],[Router],[Phone],[Email],[Cases],[PhonePrio],[CasesEmailPrio],[Reason],[ModifiedBy],[ModifiedDate]) VALUES (@EmpNo,@Router,@Phone,@Email,@Cases,@PhonePrio,@CasesEmailPrio,@Reason,@ModifiedBy,@ModifiedDate)"
+                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMChannel] ([EmpNo],[Router],[Phone],[Email],[Cases],[BackOffice],[PhonePrio],[CasesEmailPrio],[Reason],[ModifiedBy],[ModifiedDate]) VALUES (@EmpNo,@Router,@Phone,@Email,@Cases,@BackOffice,@PhonePrio,@CasesEmailPrio,@Reason,@ModifiedBy,@ModifiedDate)"
             End If
 
             dr.Close()
@@ -1406,7 +1409,7 @@ Public Class SkillMatrixClass
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
                     temp = True
-                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMChannelLog] SET Router=@Router,Phone=@Phone,Email=@Email,Cases=@Cases,PhonePrio=@PhonePrio,CasesEmailPrio=@CasesEmailPrio,Reason=@Reason,Action=@Action,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy WHERE Id=" & _Id & ";"
+                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMChannelLog] SET Router=@Router,Phone=@Phone,Email=@Email,Cases=@Cases,BackOffice=@BackOffice,PhonePrio=@PhonePrio,CasesEmailPrio=@CasesEmailPrio,BackOfficePrio=@BackOfficePrio,Reason=@Reason,Action=@Action,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy WHERE Id=" & _Id & ";"
                     Me.gridMainDbCommand.ExecuteNonQuery()
                 End If
             Catch ex As Exception
@@ -1446,7 +1449,7 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
 
-            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Date.Now())
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
 
             gridMainDbCommand.CommandText = "  INSERT INTO [dbo].[tblAMSkillPreference] ([EmpNo],[IdSkill],[ModifiedBy],[ModifiedDate])
@@ -1746,7 +1749,7 @@ Public Class CoreFunctionInfo
     Public Property AccountMaintenance As String
     Public Property SpecialProcessOrders As String
     Public Property Research As String
-
+    Public Property PrimarySkill As String
 
     Public Property ValueLinkTrained As String
     Public Property Comment As String
@@ -1851,9 +1854,11 @@ Public Class ChannelInfo
     Public Property Phone As String
     Public Property Email As String
     Public Property Cases As String
+    Public Property BackOfficeProf As String
 
     Public Property PhonePrio As String
     Public Property CasesEmailPrio As String
+    Public Property BackOfficePrio As String
     Public Property Reason As String
     Public Property ModifiedBy As String
     Public Property ModifiedDate As DateTime
