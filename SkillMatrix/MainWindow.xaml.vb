@@ -16,7 +16,7 @@ Class MainWindow
 
         SkillMatrixVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory & "\Skill Matrix.exe")
 
-        lblVersion.Content = " Skill Matrix v" & SkillMatrixVersion.FileVersion.ToString
+        Me.Title = " Skill Matrix v" & SkillMatrixVersion.FileVersion.ToString
 
         sm.SaveversionLog(SkillMatrixVersion.FileVersion.ToString)
 
@@ -1755,19 +1755,23 @@ Class MainWindow
         MsgBox("Primary skill has been set. Please click save to apply changes", vbInformation, "Agent Primary Skills")
     End Sub
 
-    Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
-        DragMove()
+    Private Sub btnRefresh_Click(sender As Object, e As RoutedEventArgs) Handles btnRefresh.Click
+        load()
     End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
-        Close()
-    End Sub
+    'Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
+    '    DragMove()
+    'End Sub
 
-    Private Sub btnMax_Click(sender As Object, e As RoutedEventArgs) Handles btnMax.Click
-        If Me.WindowState = WindowState.Maximized Then
-            Me.WindowState = WindowState.Normal
-        Else
-            Me.WindowState = WindowState.Maximized
-        End If
-    End Sub
+    'Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
+    '    Close()
+    'End Sub
+
+    'Private Sub btnMax_Click(sender As Object, e As RoutedEventArgs) Handles btnMax.Click
+    '    If Me.WindowState = WindowState.Maximized Then
+    '        Me.WindowState = WindowState.Normal
+    '    Else
+    '        Me.WindowState = WindowState.Maximized
+    '    End If
+    'End Sub
 End Class

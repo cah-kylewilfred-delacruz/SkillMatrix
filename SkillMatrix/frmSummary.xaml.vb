@@ -60,21 +60,21 @@ Public Class frmSummary
     '    dt.RowFilter = "SkillHome = " & "[Back Office]"
     '    gvSummary.ItemsSource = dt
     'End Sub
-    Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
-        DragMove()
-    End Sub
+    'Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
+    '    DragMove()
+    'End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
-        Close()
-    End Sub
+    'Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
+    '    Close()
+    'End Sub
 
-    Private Sub btnMax_Click(sender As Object, e As RoutedEventArgs) Handles btnMax.Click
-        If Me.WindowState = WindowState.Maximized Then
-            Me.WindowState = WindowState.Normal
-        Else
-            Me.WindowState = WindowState.Maximized
-        End If
-    End Sub
+    'Private Sub btnMax_Click(sender As Object, e As RoutedEventArgs) Handles btnMax.Click
+    '    If Me.WindowState = WindowState.Maximized Then
+    '        Me.WindowState = WindowState.Normal
+    '    Else
+    '        Me.WindowState = WindowState.Maximized
+    '    End If
+    'End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As RoutedEventArgs) Handles btnSearch.Click
         Dim tempCh As New List(Of String)
@@ -477,5 +477,12 @@ Public Class frmSummary
         End If
 
         gvFiltered.ItemsSource = sm.GetSkillView(cmbDept.Text, cmbSegment.SelectedValue, str, str2, str3, str4).DefaultView
+
+        If gvFiltered.Items.Count = 0 Then
+            MsgBox("No Items Matched")
+        Else
+            MsgBox(gvFiltered.Items.Count & " Items Matched")
+        End If
+
     End Sub
 End Class
