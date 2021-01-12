@@ -271,6 +271,12 @@ Public Class frmSummary
             Else str4 = str4 & " OR " & "[CasesEmailPrio] IN " & ChannelPrio
             End If
         End If
+        If chkBackOfficePrio.IsChecked Then
+            If str4 = "" Then
+                str4 = "[BackOfficePrio] IN " & ChannelPrio
+            Else str4 = str4 & " OR " & "[BackOfficePrio] IN " & ChannelPrio
+            End If
+        End If
 
 
         If chkPhone.IsChecked Then
@@ -292,6 +298,13 @@ Public Class frmSummary
             If str = "" Then
                 str = "[Router] IN " & ChannelProf
             Else str = str & " OR " & "[Router] IN " & ChannelProf
+            End If
+        End If
+
+        If chkCHBackOffice.IsChecked Then
+            If str = "" Then
+                str = "[BackOfficePrio] IN " & ChannelProf
+            Else str = str & " OR " & "[BackOfficePrio] IN " & ChannelProf
             End If
         End If
 
@@ -452,6 +465,7 @@ Public Class frmSummary
             MsgBox("Please Select a Home Skill", vbInformation)
             Exit Sub
         End If
+
         If str4 = "" Then
             MsgBox("Please Select a Channel Priority", vbInformation)
             Exit Sub

@@ -5,11 +5,20 @@ Class MainWindow
     Dim sm As SkillMatrixClass
     Dim agentLst
     Dim dt, dt2 As New DataTable
+    Dim SkillMatrixVersion As FileVersionInfo
+
     Public Sub New()
         sm = New SkillMatrixClass
         Dim dt, dt2 As New DataTable
+        Dim v
         ' This call is required by the designer.
         InitializeComponent()
+
+        SkillMatrixVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory & "\Skill Matrix.exe")
+
+        lblVersion.Content = " Skill Matrix v" & SkillMatrixVersion.FileVersion.ToString
+
+        sm.SaveversionLog(SkillMatrixVersion.FileVersion.ToString)
 
         ' Add any initialization after the InitializeComponent() call.
         a = 1
@@ -102,10 +111,6 @@ Class MainWindow
 
     End Sub
 
-    Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
-        DragMove()
-    End Sub
-
 
     Private Sub btnSearch_Click(sender As Object, e As RoutedEventArgs) Handles btnSearch.Click
 
@@ -119,11 +124,11 @@ Class MainWindow
         grdNameInfo.Visibility = Visibility.Collapsed
 
 
-        load()
         'gvAgents.Columns("LastModifiedDate").IsVisible = False
 
 
 
+        load()
 
     End Sub
 
@@ -132,7 +137,12 @@ Class MainWindow
         grdEdit.Visibility = Visibility.Collapsed
         grdNameInfo.Visibility = Visibility.Collapsed
         btnSave.Visibility = Visibility.Visible
-        load()
+        btnSearch.Visibility = Visibility.Visible
+
+        If y Then
+            load()
+        End If
+
 
         'gvAgents.Columns("EmpNo").IsVisible = False
     End Sub
@@ -239,6 +249,7 @@ Class MainWindow
             grdSPLogs.Visibility = Visibility.Collapsed
 
         Else
+
             stkCBFunction.Visibility = Visibility.Collapsed
             stkHomeSkill.Visibility = Visibility.Collapsed
             stkChannel.Visibility = Visibility.Collapsed
@@ -248,6 +259,12 @@ Class MainWindow
             grdCHLogs.Visibility = Visibility.Hidden
             grdHSLogs.Visibility = Visibility.Hidden
             grdSPLogs.Visibility = Visibility.Hidden
+
+            If gvCFLogs.Items.Count > 0 Then
+                gvCFLogs.Columns("Id").IsVisible = False
+                gvCFLogs.Columns("EmpNo").IsVisible = False
+                gvCFLogs.Columns("TeamId").IsVisible = False
+            End If
         End If
     End Sub
     Private Sub tabHSkill_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles tabHSkill.MouseDown
@@ -286,6 +303,11 @@ Class MainWindow
             grdHSLogs.Visibility = Visibility.Visible
             grdSPLogs.Visibility = Visibility.Collapsed
 
+            If gvHSLogs.Items.Count > 0 Then
+                gvHSLogs.Columns("Id").IsVisible = False
+                gvHSLogs.Columns("EmpNo").IsVisible = False
+                gvHSLogs.Columns("TeamId").IsVisible = False
+            End If
         End If
 
 
@@ -318,7 +340,6 @@ Class MainWindow
             grdSPLogs.Visibility = Visibility.Collapsed
 
         Else
-
             stkCBFunction.Visibility = Visibility.Collapsed
             stkHomeSkill.Visibility = Visibility.Collapsed
             stkChannel.Visibility = Visibility.Collapsed
@@ -328,6 +349,12 @@ Class MainWindow
             grdCHLogs.Visibility = Visibility.Visible
             grdHSLogs.Visibility = Visibility.Collapsed
             grdSPLogs.Visibility = Visibility.Collapsed
+
+            If gvChLogs.Items.Count > 0 Then
+                gvChLogs.Columns("Id").IsVisible = False
+                gvChLogs.Columns("EmpNo").IsVisible = False
+                gvChLogs.Columns("TeamId").IsVisible = False
+            End If
         End If
 
 
@@ -361,6 +388,7 @@ Class MainWindow
             grdHSLogs.Visibility = Visibility.Collapsed
             grdSPLogs.Visibility = Visibility.Collapsed
         Else
+
             stkCBFunction.Visibility = Visibility.Collapsed
             stkHomeSkill.Visibility = Visibility.Collapsed
             stkChannel.Visibility = Visibility.Collapsed
@@ -371,6 +399,12 @@ Class MainWindow
             grdCHLogs.Visibility = Visibility.Collapsed
             grdHSLogs.Visibility = Visibility.Collapsed
             grdSPLogs.Visibility = Visibility.Visible
+
+            If gvSPLogs.Items.Count > 0 Then
+                'gvSPLogs.Columns("Id").IsVisible = False
+                gvSPLogs.Columns("EmpNo").IsVisible = False
+                gvSPLogs.Columns("TeamId").IsVisible = False
+            End If
         End If
 
     End Sub
@@ -656,6 +690,8 @@ Class MainWindow
             tempCF.Research = tab1CmbResearch.SelectedIndex
             tempCF.PrimarySkill = lblPrimarySkill.Content
             tempCF.ValueLinkTrained = cmbVLTrained.SelectedIndex
+            tempCF.Xipay = cmbXiPay.SelectedIndex
+
             tempCF.Comment = tab1TxtComment.Text
 
 
@@ -686,7 +722,7 @@ Class MainWindow
             End If
 
         ElseIf b Then
-            If tab3CmbPhonePRIO.Text <> "P1" Or tab3CmbEmailCasePrio.Text <> "P1" Or tab3CmbBackOfficePrio.Text <> "P1" Then
+            If (tab3CmbPhonePRIO.Text <> "P1" Or tab3CmbEmailCasePrio.Text <> "P1" Or tab3CmbBackOfficePrio.Text <> "P1") And tab3TxtReason.Text = "" Then
                 MsgBox("Reason is required!", MsgBoxStyle.Critical, "ERROR")
                 Exit Sub
             End If
@@ -1004,6 +1040,7 @@ Class MainWindow
         grdHSLogs.Visibility = Visibility.Collapsed
         grdSPLogs.Visibility = Visibility.Collapsed
         btnApprove.Visibility = Visibility.Visible
+        btnSearch.Visibility = Visibility.Collapsed
         'agentlst = gvAgents.SelectedItem
         If Not IsNothing(cmbSegment.SelectedValue) Then
             gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
@@ -1017,21 +1054,21 @@ Class MainWindow
                 gvCFLogs.Columns("EmpNo").IsVisible = False
                 gvCFLogs.Columns("TeamId").IsVisible = False
             End If
-            If gvCHLogs.Items.Count > 0 Then
-                gvCHLogs.Columns("Id").IsVisible = False
-                gvCHLogs.Columns("EmpNo").IsVisible = False
-                gvCHLogs.Columns("TeamId").IsVisible = False
-            End If
-            If gvHSLogs.Items.Count > 0 Then
-                gvHSLogs.Columns("Id").IsVisible = False
-                gvHSLogs.Columns("EmpNo").IsVisible = False
-                gvHSLogs.Columns("TeamId").IsVisible = False
-            End If
-            If gvSPLogs.Items.Count > 0 Then
-                gvSPLogs.Columns("Id").IsVisible = False
-                gvSPLogs.Columns("EmpNo").IsVisible = False
-                gvSPLogs.Columns("TeamId").IsVisible = False
-            End If
+            'If gvCHLogs.Items.Count > 0 Then
+            '    gvCHLogs.Columns("Id").IsVisible = False
+            '    gvCHLogs.Columns("EmpNo").IsVisible = False
+            '    gvCHLogs.Columns("TeamId").IsVisible = False
+            'End If
+            'If gvHSLogs.Items.Count > 0 Then
+            '    gvHSLogs.Columns("Id").IsVisible = False
+            '    gvHSLogs.Columns("EmpNo").IsVisible = False
+            '    gvHSLogs.Columns("TeamId").IsVisible = False
+            'End If
+            'If gvSPLogs.Items.Count > 0 Then
+            '    'gvSPLogs.Columns("Id").IsVisible = False
+            '    gvSPLogs.Columns("EmpNo").IsVisible = False
+            '    gvSPLogs.Columns("TeamId").IsVisible = False
+            'End If
 
 
             'lblEmp.Content = agentlst.Item("Name")
@@ -1385,6 +1422,14 @@ Class MainWindow
                 Else
                     tempCF.ValueLinkTrained = 1
                 End If
+
+                If obj.Item("Xipay") = "No" Then
+                    tempCF.Xipay = 0
+                Else
+                    tempCF.Xipay = 1
+                End If
+
+
                 tempCF.PrimarySkill = obj.Item("PrimarySkill")
                 tempCF.Comment = obj.Item("Comment")
                 tempCF.ModifiedBy = obj.Item("ModifiedBy")
@@ -1440,7 +1485,7 @@ Class MainWindow
                 Dim obj As DataRowView = gvChLogs.SelectedItems(i)
                 tempCH.EmpNo = obj.Item("EmpNo")
 
-                If obj.Item("Router") = "" Then
+                If IsDBNull(obj.Item("Router")) Then
                     tempCH.Router = 0
                 ElseIf obj.Item("Router") = "New" Then
                     tempCH.Router = 1
@@ -1452,7 +1497,7 @@ Class MainWindow
                     tempCH.Router = 4
                 End If
 
-                If obj.Item("Phone") = "" Then
+                If IsDBNull(obj.Item("Phone")) Then
                     tempCH.Phone = 0
                 ElseIf obj.Item("Phone") = "New" Then
                     tempCH.Phone = 1
@@ -1464,7 +1509,7 @@ Class MainWindow
                     tempCH.Phone = 4
                 End If
 
-                If obj.Item("Email") = "" Then
+                If IsDBNull(obj.Item("Email")) Then
                     tempCH.Email = 0
                 ElseIf obj.Item("Email") = "New" Then
                     tempCH.Email = 1
@@ -1476,7 +1521,7 @@ Class MainWindow
                     tempCH.Email = 4
                 End If
 
-                If obj.Item("Cases") = "" Then
+                If IsDBNull(obj.Item("Cases")) Then
                     tempCH.Cases = 0
                 ElseIf obj.Item("Cases") = "New" Then
                     tempCH.Cases = 1
@@ -1488,22 +1533,22 @@ Class MainWindow
                     tempCH.Cases = 4
                 End If
 
-                If obj.Item("BackOffice") = "" Then
-                    tempCH.Cases = 0
+                If IsDBNull(obj.Item("BackOfficeProf")) Then
+                    tempCH.BackOfficeProf = 0
                 ElseIf obj.Item("BackOffice") = "New" Then
-                    tempCH.Cases = 1
+                    tempCH.BackOfficeProf = 1
                 ElseIf obj.Item("BackOffice") = "Emerging" Then
-                    tempCH.Cases = 2
+                    tempCH.BackOfficeProf = 2
                 ElseIf obj.Item("BackOffice") = "Stable" Then
-                    tempCH.Cases = 3
+                    tempCH.BackOfficeProf = 3
                 Else
-                    tempCH.Cases = 4
+                    tempCH.BackOfficeProf = 4
                 End If
 
-                tempCH.PhonePrio = obj.Item("PhonePrio")
-                tempCH.CasesEmailPrio = obj.Item("CasesEmailPrio")
-                tempCH.BackOfficePrio = obj.Item("BackOfficePrio")
-                tempCH.Reason = obj.Item("Reason")
+                tempCH.PhonePrio = If(IsDBNull(obj.Item("PhonePrio")), "", obj.Item("PhonePrio"))
+                tempCH.CasesEmailPrio = If(IsDBNull(obj.Item("CasesEmailPrio")), "", obj.Item("CasesEmailPrio")) ' obj.Item("CasesEmailPrio")
+                tempCH.BackOfficePrio = If(IsDBNull(obj.Item("BackOfficePrio")), "", obj.Item("BackOfficePrio")) ' obj.Item("BackOfficePrio")
+                tempCH.Reason = If(IsDBNull(obj.Item("Reason")), "", obj.Item("Reason")) ' obj.Item("Reason")
                 tempCH.ModifiedBy = obj.Item("ModifiedBy")
                 tempCH.ModifiedDate = obj.Item("ModifiedDate")
                 CH = sm.SaveCHLog(tempCH, obj.Item("Id"))
@@ -1633,7 +1678,7 @@ Class MainWindow
                 tempSP2.ModifiedBy = obj.Item("ModifiedBy")
                 tempSP2.ModifiedDate = obj.Item("ModifiedDate")
                 SP = sm.SaveSPLog(tempSP2)
-                If HS Then
+                If SP Then
                     n += 1
                 End If
             Next
@@ -1641,9 +1686,9 @@ Class MainWindow
 
             Dim str As String
             If n > 1 Then
-                str = " Item"
-            Else
                 str = " Items"
+            Else
+                str = " Item"
             End If
 
 
@@ -1708,5 +1753,21 @@ Class MainWindow
         stkPrimarySkill.Visibility = Visibility.Collapsed
 
         MsgBox("Primary skill has been set. Please click save to apply changes", vbInformation, "Agent Primary Skills")
+    End Sub
+
+    Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
+        DragMove()
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
+        Close()
+    End Sub
+
+    Private Sub btnMax_Click(sender As Object, e As RoutedEventArgs) Handles btnMax.Click
+        If Me.WindowState = WindowState.Maximized Then
+            Me.WindowState = WindowState.Normal
+        Else
+            Me.WindowState = WindowState.Maximized
+        End If
     End Sub
 End Class

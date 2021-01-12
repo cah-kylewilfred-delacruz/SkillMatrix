@@ -43,6 +43,46 @@ Public Class SkillMatrixClass
 
     End Function
 
+
+    Public Function OpenMainDbConnection1() As Boolean
+
+        Me.gridMainDbConnection = New SqlConnection
+        Me.gridMainDbCommand = New SqlCommand
+
+        Me.gridMainDbConnection.ConnectionString = "Data Source=WPPHL039SQL01;" &
+                            "Initial Catalog=RPA_GRID_MAIN" & ";" &
+                            "Persist Security Info=True;" &
+                            "Integrated Security=SSPI;" &
+                            "Connect Timeout=30;"
+
+
+        If Me.gridMainDbConnection.State = ConnectionState.Open Then
+            Me.CloseMainDbConnection()
+        End If
+
+        Try
+
+            Me.gridMainDbConnection.Open()
+
+            Me.gridMainDbCommand.Connection = Me.gridMainDbConnection
+
+            If Me.gridMainDbConnection.State = ConnectionState.Open Then
+                Me.gridMainDbConnectionState = True
+                OpenMainDbConnection1 = True
+            Else
+                Me.gridMainDbConnectionState = False
+                OpenMainDbConnection1 = False
+            End If
+
+        Catch ex As SqlException
+            OpenMainDbConnection1 = False
+
+        End Try
+
+    End Function
+
+
+
     Public Sub CloseMainDbConnection()
 
         Me.gridMainDbConnection.Close()
@@ -618,10 +658,9 @@ Public Class SkillMatrixClass
 
 
         If temp.Columns(0).ColumnName = "TeamId" Then
-            temp.Columns.Remove("TeamId")
-            temp.Columns.Remove("EmpNo")
-        End If
-
+                temp.Columns.Remove("TeamId")
+                temp.Columns.Remove("EmpNo")
+            End If
 
 
         Return temp
@@ -1035,6 +1074,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@PrimarySkill", _temp.PrimarySkill)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ValueLinkTrained", _temp.ValueLinkTrained)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Xipay", _temp.Xipay)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Comment", _temp.Comment)
 
 
@@ -1047,7 +1087,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", "")
 
 
-            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunctionLog] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Comment],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained,@Comment,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
+            gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunctionLog] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Xipay],[Comment],[Action],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained,@Xipay,@Comment,@Action,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate)"
 
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
@@ -1244,7 +1284,7 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@PrimarySkill", _temp.PrimarySkill)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@ValueLinkTrained", _temp.ValueLinkTrained)
-
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Xipay", _temp.Xipay)
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Comment", _temp.Comment)
 
@@ -1264,9 +1304,9 @@ Public Class SkillMatrixClass
             Dim dr As SqlDataReader = gridMainDbCommand.ExecuteReader
 
             If dr.Read Then
-                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunction] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,ValueLinkTrained=@ValueLinkTrained,PrimarySkill=@PrimarySkill,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Comment=@Comment WHERE EmpNo=@EmpNo;"
+                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunction] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,ValueLinkTrained=@ValueLinkTrained,Xipay=@Xipay,PrimarySkill=@PrimarySkill,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Comment=@Comment WHERE EmpNo=@EmpNo;"
             Else
-                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunction] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Comment],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate],[LastModifiedDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained,@Comment,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate,@LastModifiedDate)"
+                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblAMCoreFunction] ([EmpNo],[OrderProcess],[Credit],[Rebill],[Returns],[Complaints],[ShippingDiscrepancy],[DocumentRequests],[PricingProduct],[Implementation],[CarrierDisposition],[AccountMaintenance],[SpecialProcessOrders],[Research],[PrimarySkill],[ValueLinkTrained],[Xipay],[Comment],[ModifiedBy],[ModifiedDate],[ReviewBy],[ReviewDate],[LastModifiedDate]) VALUES (@EmpNo,@OrderProcess,@Credit,@Rebill,@Returns,@Complaints,@ShippingDiscrepancy,@DocumentRequests,@PricingProduct,@Implementation,@CarrierDisposition,@AccountMaintenance,@SpecialProcessOrders,@Research,@PrimarySkill,@ValueLinkTrained[Xipay],@Comment,@ModifiedBy,@ModifiedDate,@ReviewBy,@ReviewDate,@LastModifiedDate)"
             End If
 
             dr.Close()
@@ -1276,7 +1316,7 @@ Public Class SkillMatrixClass
             Try
                 If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
                     temp = True
-                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunctionLog] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,PrimarySkill=@PrimarySkill,ValueLinkTrained=@ValueLinkTrained,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Action=@Action WHERE Id=" & _Id & ";"
+                    gridMainDbCommand.CommandText = "UPDATE [dbo].[tblAMCoreFunctionLog] SET OrderProcess=@OrderProcess,Credit=@Credit,Rebill=@Rebill,Returns=@Returns,Complaints=@Complaints,ShippingDiscrepancy=@ShippingDiscrepancy,DocumentRequests=@DocumentRequests,PricingProduct=@PricingProduct,Implementation=@Implementation,CarrierDisposition=@CarrierDisposition,AccountMaintenance=@AccountMaintenance,SpecialProcessOrders=@SpecialProcessOrders,Research=@Research,PrimarySkill=@PrimarySkill,ValueLinkTrained=@ValueLinkTrained,Xipay=@Xipay,ReviewDate=@ReviewDate,ReviewBy=@ReviewBy,Action=@Action WHERE Id=" & _Id & ";"
                     Me.gridMainDbCommand.ExecuteNonQuery()
                 End If
             Catch ex As Exception
@@ -1375,8 +1415,9 @@ Public Class SkillMatrixClass
             Me.gridMainDbCommand.Parameters.AddWithValue("@Router", _temp.Router)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Phone", _temp.Phone)
             Me.gridMainDbCommand.Parameters.AddWithValue("@Email", _temp.Email)
-            Me.gridMainDbCommand.Parameters.AddWithValue("@Cases", _temp.Cases)
             Me.gridMainDbCommand.Parameters.AddWithValue("@BackOffice", _temp.BackOfficeProf)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Cases", _temp.Cases)
+
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@PhonePrio", _temp.PhonePrio)
             Me.gridMainDbCommand.Parameters.AddWithValue("@CasesEmailPrio", _temp.CasesEmailPrio)
@@ -1524,6 +1565,55 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
+
+
+
+    ' -------------------------------------------- '
+    ' LOG SKILL MATRIX VERSION VERSION '
+    Public Function SaveversionLog(ByVal _tempV As String) As Boolean
+        Dim temp As Boolean
+        If OpenMainDbConnection1() Then
+            Me.gridMainDbCommand.Parameters.Clear()
+            Me.gridMainDbCommand.Parameters.AddWithValue("@EID", Environment.UserName)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@Version", _tempV)
+            Me.gridMainDbCommand.Parameters.AddWithValue("@LastLogged", Date.Now())
+
+
+            gridMainDbCommand.CommandText = "SELECT * FROM [dbo].[tblSkillMatrixLog] WHERE [EID]=@EID;"
+
+            Dim dr As SqlDataReader = gridMainDbCommand.ExecuteReader
+
+            If dr.Read Then
+                gridMainDbCommand.CommandText = "UPDATE [dbo].[tblSkillMatrixLog] SET Version=@Version,LastLogged=@LastLogged WHERE EID=@EID;"
+            Else
+                gridMainDbCommand.CommandText = "INSERT INTO [dbo].[tblSkillMatrixLog] ([EID],[Version],[LastLogged]) VALUES (@EID,@Version,@LastLogged)"
+            End If
+
+            dr.Close()
+
+
+
+            Try
+                If Me.gridMainDbCommand.ExecuteNonQuery() > 0 Then
+                    temp = True
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+
+            Me.CloseMainDbConnection()
+
+
+
+        Else
+            MsgBox("Failed to open main database. Please check you connection.")
+        End If
+
+
+
+        Return temp
+    End Function
+
 
 
 End Class
@@ -1752,6 +1842,7 @@ Public Class CoreFunctionInfo
     Public Property PrimarySkill As String
 
     Public Property ValueLinkTrained As String
+    Public Property Xipay As String
     Public Property Comment As String
     Public Property ModifiedBy As String
     Public Property ModifiedDate As DateTime

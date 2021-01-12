@@ -17,7 +17,7 @@
 
         <Grid Grid.Row="0" Name="topBar" Height="20" VerticalAlignment="Top" Background="#1a0000">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Name="btnMax" Content="--" Height="21" VerticalAlignment="Center" Foreground="#FFF9F9F9" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Margin="0,2,10,2" Background="#FFEA3939" BorderBrush="#FFEA3939" Width="18"/>
+                <Button Name="btnMax" Content="-" Height="21" VerticalAlignment="Center" Foreground="#FFF9F9F9" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Margin="0,2,10,2" Background="#FFEA3939" BorderBrush="#FFEA3939" Width="18"/>
                 <Button Name="btnClose" Content="x" Height="21" VerticalAlignment="Center" Foreground="#FFF9F9F9" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Margin="0,2,3,2" Background="#FFEA3939" BorderBrush="#FFEA3939" Width="18"/>
             </StackPanel>
         </Grid>
@@ -102,12 +102,14 @@
                                                     <CheckBox Name="chkCases" Content="Cases" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                     <CheckBox Name="chkEmail" Content="Email" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                     <CheckBox Name="chkCHRouter" Content="Router" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
+                                                    <CheckBox Name="chkCHBackOffice" Content="Back Office" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                 </StackPanel>
 
                                                 <StackPanel Orientation="Vertical">
                                                     <Label Foreground="White" Content="PPRIORITY" HorizontalAlignment="Center" Margin="0"/>
                                                     <CheckBox Name="chkPhonePrio" Content="Phone" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                     <CheckBox Name="chkCasesEmailPrio" Content="Cases/Email" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
+                                                    <CheckBox Name="chkBackOfficePrio" Content="Back Office" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                 </StackPanel>
 
                                             </StackPanel>

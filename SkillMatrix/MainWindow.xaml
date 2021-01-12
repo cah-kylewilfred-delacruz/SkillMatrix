@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkillMatrix"
         mc:Ignorable="d"
-        Title="Skill Matrix" Height="700" Width="900" WindowStartupLocation="CenterScreen"  WindowStyle="None" WindowState="Maximized" Background="#FFF5F3E7">
+        Title="Skill Matrix" WindowStartupLocation="CenterScreen"  WindowStyle="None" Width="1200" Height="800" MinHeight="700" MinWidth="1200" WindowState="Maximized" Background="#FFF5F3E7">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
@@ -99,7 +99,11 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Name="topBar" Height="20" VerticalAlignment="Top" Background="#1a0000">
-
+            <Label Content=" test" Name="lblVersion" Foreground="White" FontSize="9"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="btnMax" Content="-" Height="21" VerticalAlignment="Center" Foreground="#FFF9F9F9" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Margin="0,2,10,2" Background="#FFEA3939" BorderBrush="#FFEA3939" Width="18"/>
+                <Button Name="btnClose" Content="x" Height="21" VerticalAlignment="Center" Foreground="#FFF9F9F9" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Margin="0,2,3,2" Background="#FFEA3939" BorderBrush="#FFEA3939" Width="18"/>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -279,7 +283,6 @@
                 <Grid Grid.Row="2" Background="#232A2E" >
                     <StackPanel Name="stkEdit" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Visible" >
                         <Button Name="btnEdit" Content="Edit" Width="70" Height="30" BorderBrush="White" BorderThickness="1" Background="{x:Null}" Foreground="White" Margin="0,0,10,0"/>
-                        <Button Name="btnDel" Content="Delete" Width="70" Height="30" BorderBrush="White" BorderThickness="1" Background="{x:Null}" Foreground="White" Margin="0,0,10,0"/>
                     </StackPanel>
 
                 </Grid>
@@ -329,7 +332,7 @@
                         <!--      TABS      -->
 
 
-                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Collapsed">
+                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Visible">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Order Process" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
                                     <Label.Background>
@@ -553,6 +556,20 @@
                                     </Label.Background>
                                 </Label>
                                 <ComboBox Name="cmbVLTrained" Height="30" Width="100" >
+                                    <ComboBoxItem Content="No"/>
+                                    <ComboBoxItem Content="Yes"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Label Content="Xipay Trained?" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <ComboBox Name="cmbXiPay" Height="30" Width="100" >
                                     <ComboBoxItem Content="No"/>
                                     <ComboBoxItem Content="Yes"/>
                                 </ComboBox>
@@ -886,7 +903,7 @@
 
                         </StackPanel>
 
-                        <StackPanel Name="stkChannel" Orientation="Vertical" Visibility="Visible">
+                        <StackPanel Name="stkChannel" Orientation="Vertical" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Proficiency" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,0,0">
                                     <Label.Background>
@@ -1452,16 +1469,16 @@
 
                         <Grid Name="grdCHLogs" Margin="5" Visibility="Collapsed">
 
-                            <telerik:RadGridView Name="gvChLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
+                            <telerik:RadGridView Name="gvChLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Multiple" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
                         </Grid>
 
                         <Grid Name="grdHSLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Name="gvHSLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
+                            <telerik:RadGridView Name="gvHSLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Multiple" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
 
                         </Grid>
 
                         <Grid Name="grdSPLogs" Margin="5" Visibility="Collapsed">
-                            <telerik:RadGridView Name="gvSPLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
+                            <telerik:RadGridView Name="gvSPLogs"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Multiple" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
                         </Grid>
                     </Grid>
 
