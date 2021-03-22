@@ -1,5 +1,11 @@
 ﻿Imports System.Data
+Imports System.IO
+Imports System.Windows.Forms
+Imports Microsoft.Win32
 Imports SkillMatrix.SkillMatrixClass
+Imports Telerik.Windows.Controls
+Imports SaveFileDialog = Microsoft.Win32.SaveFileDialog
+
 Public Class frmSummary
 
     Dim sm = New SkillMatrix.SkillMatrixClass
@@ -146,7 +152,8 @@ Public Class frmSummary
         'End If
 
 
-        If cmbSegment.SelectedValue = "" Then
+
+        If cmbTower.SelectedValue = "" And cmbSegment.SelectedValue = "" Then
             MsgBox("Please Select a select segment", vbInformation)
             Exit Sub
         End If
@@ -277,6 +284,12 @@ Public Class frmSummary
             Else str4 = str4 & " OR " & "[BackOfficePrio] IN " & ChannelPrio
             End If
         End If
+        If chkCHRouterPrio.IsChecked Then
+            If str4 = "" Then
+                str4 = "[RouterPrio] IN " & ChannelPrio
+            Else str4 = str4 & " OR " & "[RouterPrio] IN " & ChannelPrio
+            End If
+        End If
 
 
         If chkPhone.IsChecked Then
@@ -303,8 +316,8 @@ Public Class frmSummary
 
         If chkCHBackOffice.IsChecked Then
             If str = "" Then
-                str = "[BackOfficePrio] IN " & ChannelProf
-            Else str = str & " OR " & "[BackOfficePrio] IN " & ChannelProf
+                str = "[BackOfficeProf] IN " & ChannelProf
+            Else str = str & " OR " & "[BackOfficeProf] IN " & ChannelProf
             End If
         End If
 
@@ -484,5 +497,36 @@ Public Class frmSummary
             MsgBox(gvFiltered.Items.Count & " Items Matched")
         End If
 
+    End Sub
+
+    Private Sub btnExport_Click(sender As Object, e As RoutedEventArgs) Handles btnExport.Click
+        Dim extension As String = "xls"
+        Dim dialog As New SaveFileDialog() With {
+     .DefaultExt = extension,
+     .Filter = String.Format("{1} files (.{0})|.{0}|All files (.)|.", extension, "Excel"),
+     .FilterIndex = 1
+    }
+
+        Try
+            If dialog.ShowDialog() <> False Then
+                Using stream As Stream = dialog.OpenFile()
+                    gvFiltered.Export(stream, New GridViewExportOptions() With {
+             .Format = ExportFormat.Html,
+             .ShowColumnHeaders = True,
+             .ShowColumnFooters = False,
+             .ShowGroupFooters = False
+            })
+                End Using
+                MessageBox.Show("Export Success", "Grid", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
+                Dim fullPath As String = dialog.FileName
+                Dim psi As ProcessStartInfo = New ProcessStartInfo()
+                psi.FileName = Path.GetFileName(fullPath)
+                psi.WorkingDirectory = Path.GetDirectoryName(fullPath)
+                psi.Arguments = "p1=hardCodedv1 p2=v2"
+                Process.Start(psi)
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

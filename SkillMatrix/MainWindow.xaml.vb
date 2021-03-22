@@ -1,7 +1,9 @@
 ﻿Imports System.Data
+Imports System.IO
+Imports Telerik.Windows.Controls
 
 Class MainWindow
-    Dim a, b, c, d, x, y As Boolean
+    Dim a, b, c, d, x, y, admin, cOff As Boolean
     Dim sm As SkillMatrixClass
     Dim agentLst
     Dim dt, dt2 As New DataTable
@@ -10,7 +12,7 @@ Class MainWindow
     Public Sub New()
         sm = New SkillMatrixClass
         Dim dt, dt2 As New DataTable
-        Dim v
+
         ' This call is required by the designer.
         InitializeComponent()
 
@@ -109,7 +111,20 @@ Class MainWindow
 
 
 
+
+        dt = sm.GetUserAdmin()
+
+        admin = 0
+        For i = 0 To dt.Rows.Count - 1
+            If dt.Rows(i).Item("EID") = Environment.UserName Then
+                admin = 1
+            End If
+        Next
+        admin = 0
+        Cutoff()
     End Sub
+
+
 
 
     Private Sub btnSearch_Click(sender As Object, e As RoutedEventArgs) Handles btnSearch.Click
@@ -148,7 +163,13 @@ Class MainWindow
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As RoutedEventArgs) Handles btnEdit.Click
-        gvEdit()
+        If cOff <> 0 Then
+            gvEdit()
+        ElseIf admin Then
+            gvEdit()
+        Else
+            MsgBox("Modification of the Agent's skill is Sunday to Wednesday only.", vbInformation, "SkillMatrix")
+        End If
     End Sub
 
     Private Sub load()
@@ -220,6 +241,10 @@ Class MainWindow
         End If
     End Sub
     Private Sub tabCBF_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles tabCBF.MouseDown
+        cbf()
+    End Sub
+
+    Private Sub cbf()
 
         a = 1
         b = 0
@@ -437,7 +462,14 @@ Class MainWindow
     End Sub
 
     Private Sub gvAgents_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles gvAgents.MouseDoubleClick
-        gvEdit()
+        If cOff <> 0 Then
+            gvEdit()
+        ElseIf admin Then
+            gvEdit()
+        Else
+            MsgBox("Modification of the Agent's skill is Sunday to Wednesday only.", vbInformation, "SkillMatrix")
+        End If
+
     End Sub
 
 
@@ -621,6 +653,7 @@ Class MainWindow
             tab3CmbCase.SelectedIndex = ch.Cases
             tab3CmbBackOffice.SelectedIndex = ch.BackOfficeProf
 
+            tab3CmbRouterPRIO.Text = ch.RouterPrio
             tab3CmbPhonePRIO.Text = ch.PhonePrio
             tab3CmbEmailCasePrio.Text = ch.CasesEmailPrio
             tab3CmbBackOfficePrio.Text = ch.BackOfficePrio
@@ -1039,45 +1072,26 @@ Class MainWindow
         grdCHLogs.Visibility = Visibility.Collapsed
         grdHSLogs.Visibility = Visibility.Collapsed
         grdSPLogs.Visibility = Visibility.Collapsed
-        btnApprove.Visibility = Visibility.Visible
         btnSearch.Visibility = Visibility.Collapsed
         'agentlst = gvAgents.SelectedItem
-        If Not IsNothing(cmbSegment.SelectedValue) Then
-            gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
-            gvCHLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
-            gvHSLogs.ItemsSource = sm.GetHSLog(cmbSegment.SelectedValue).DefaultView
-            gvSPLogs.ItemsSource = sm.GetSPLog(cmbSegment.SelectedValue).DefaultView
 
+        gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
+        gvChLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
+        gvHSLogs.ItemsSource = sm.GetHSLog(cmbSegment.SelectedValue).DefaultView
+        gvSPLogs.ItemsSource = sm.GetSPLog(cmbSegment.SelectedValue).DefaultView
 
-            If gvCFLogs.Items.Count > 0 Then
-                gvCFLogs.Columns("Id").IsVisible = False
-                gvCFLogs.Columns("EmpNo").IsVisible = False
-                gvCFLogs.Columns("TeamId").IsVisible = False
-            End If
-            'If gvCHLogs.Items.Count > 0 Then
-            '    gvCHLogs.Columns("Id").IsVisible = False
-            '    gvCHLogs.Columns("EmpNo").IsVisible = False
-            '    gvCHLogs.Columns("TeamId").IsVisible = False
-            'End If
-            'If gvHSLogs.Items.Count > 0 Then
-            '    gvHSLogs.Columns("Id").IsVisible = False
-            '    gvHSLogs.Columns("EmpNo").IsVisible = False
-            '    gvHSLogs.Columns("TeamId").IsVisible = False
-            'End If
-            'If gvSPLogs.Items.Count > 0 Then
-            '    'gvSPLogs.Columns("Id").IsVisible = False
-            '    gvSPLogs.Columns("EmpNo").IsVisible = False
-            '    gvSPLogs.Columns("TeamId").IsVisible = False
-            'End If
-
-
-            'lblEmp.Content = agentlst.Item("Name")
-            'lblSup.Content = agentlst.Item("Supervisor")
-            'lblManager.Content = agentlst.Item("Manager")
-            'lblStatus.Content = If(agentlst.Item("Status") = True, "Active", "Inactive")
-            'lblDomestic.Content = If(agentlst.Item("Domestic") = True, "Yes", "No")
-            btnSave.Visibility = Visibility.Collapsed
+        If admin Then
+            btnApprove.Visibility = Visibility.Visible
+        Else
+            btnApprove.Visibility = Visibility.Collapsed
         End If
+        If gvCFLogs.Items.Count > 0 Then
+            gvCFLogs.Columns("Id").IsVisible = False
+            gvCFLogs.Columns("EmpNo").IsVisible = False
+            gvCFLogs.Columns("TeamId").IsVisible = False
+        End If
+        btnSave.Visibility = Visibility.Collapsed
+
 
         tabCBF.Background = New SolidColorBrush(Color.FromRgb(234, 57, 57))
         tabCBF.BorderBrush = New SolidColorBrush(Color.FromRgb(234, 57, 57))
@@ -1091,6 +1105,8 @@ Class MainWindow
         'Else
         '    MsgBox("Please select an employee to view logs")
         'End If
+
+        cbf()
     End Sub
 
 
@@ -1452,7 +1468,7 @@ Class MainWindow
             'tempCF.EmpNo = _EmpNo
 
             'If CF Then
-            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, "Info")
             gvCFLogs.ItemsSource = sm.GetCFLog(cmbSegment.SelectedValue).DefaultView
 
 
@@ -1535,11 +1551,11 @@ Class MainWindow
 
                 If IsDBNull(obj.Item("BackOfficeProf")) Then
                     tempCH.BackOfficeProf = 0
-                ElseIf obj.Item("BackOffice") = "New" Then
+                ElseIf obj.Item("BackOfficeProf") = "New" Then
                     tempCH.BackOfficeProf = 1
-                ElseIf obj.Item("BackOffice") = "Emerging" Then
+                ElseIf obj.Item("BackOfficeProf") = "Emerging" Then
                     tempCH.BackOfficeProf = 2
-                ElseIf obj.Item("BackOffice") = "Stable" Then
+                ElseIf obj.Item("BackOfficeProf") = "Stable" Then
                     tempCH.BackOfficeProf = 3
                 Else
                     tempCH.BackOfficeProf = 4
@@ -1566,7 +1582,7 @@ Class MainWindow
             'tempCH.EmpNo = _EmpNo
 
             'If CH Then
-            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, "Info")
             gvChLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
 
 
@@ -1600,7 +1616,7 @@ Class MainWindow
         ElseIf c Then
             n = 0
             For i = 0 To gvChLogs.SelectedItems.Count - 1
-                Dim obj As DataRowView = gvChLogs.SelectedItems(i)
+                Dim obj As DataRowView = gvHSLogs.SelectedItems(i)
 
                 tempHS.EmpNo = obj.Item("EmpNo")
                 tempHS.BackOffice = obj.Item("BackOffice")
@@ -1640,7 +1656,7 @@ Class MainWindow
             ''tempHS.EmpNo = _EmpNo
 
             'If HS Then
-            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, "Info")
             gvHSLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
 
             a = 0
@@ -1670,14 +1686,16 @@ Class MainWindow
 
         ElseIf d Then
             n = 0
-            For i = 0 To gvChLogs.SelectedItems.Count - 1
-                Dim obj As DataRowView = gvChLogs.SelectedItems(i)
+            Dim date1 As New DateTime
+            date1 = Format(Date.Now(), "MM/dd/yyyy hh:mm")
+            For i = 0 To gvSPLogs.SelectedItems.Count - 1
+                Dim obj As DataRowView = gvSPLogs.SelectedItems(i)
 
                 tempSP2.EmpNo = obj.Item("EmpNo")
 
                 tempSP2.ModifiedBy = obj.Item("ModifiedBy")
                 tempSP2.ModifiedDate = obj.Item("ModifiedDate")
-                SP = sm.SaveSPLog(tempSP2)
+                SP = sm.SaveSPLog(tempSP2, date1)
                 If SP Then
                     n += 1
                 End If
@@ -1693,7 +1711,7 @@ Class MainWindow
 
 
 
-            MsgBox(n & str & " Approved", MsgBoxStyle.Information, vbInformation)
+            MsgBox(n & str & " Approved", MsgBoxStyle.Information, "Info")
 
             grdSearch.Visibility = Visibility.Visible
             grdEdit.Visibility = Visibility.Collapsed
@@ -1759,6 +1777,37 @@ Class MainWindow
         load()
     End Sub
 
+    Private Sub btnExport_Click(sender As Object, e As RoutedEventArgs) Handles btnExport.Click
+        Dim extension As String = "xls"
+        Dim dialog As New Microsoft.Win32.SaveFileDialog() With {
+     .DefaultExt = extension,
+     .Filter = String.Format("{1} files (.{0})|.{0}|All files (.)|.", extension, "Excel"),
+     .FilterIndex = 1
+    }
+
+        Try
+            If dialog.ShowDialog() <> False Then
+                Using stream As Stream = dialog.OpenFile()
+                    gvAgents.Export(stream, New GridViewExportOptions() With {
+             .Format = ExportFormat.Html,
+             .ShowColumnHeaders = True,
+             .ShowColumnFooters = False,
+             .ShowGroupFooters = False
+            })
+                End Using
+                MessageBox.Show("Export Success", "Grid", vbOKOnly)
+                Dim fullPath As String = dialog.FileName
+                Dim psi As ProcessStartInfo = New ProcessStartInfo()
+                psi.FileName = Path.GetFileName(fullPath)
+                psi.WorkingDirectory = Path.GetDirectoryName(fullPath)
+                psi.Arguments = "p1=hardCodedv1 p2=v2"
+                Process.Start(psi)
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     'Private Sub topBar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles topBar.MouseDown
     '    DragMove()
     'End Sub
@@ -1774,4 +1823,11 @@ Class MainWindow
     '        Me.WindowState = WindowState.Maximized
     '    End If
     'End Sub
+
+
+    Private Sub Cutoff()
+        If Weekday(Date.Now()) < 5 Then
+            cOff = 0
+        End If
+    End Sub
 End Class

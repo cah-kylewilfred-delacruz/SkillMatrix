@@ -150,6 +150,10 @@ Public Class SkillMatrixClass
 
                 End While
 
+                If temp.Count > 1 Then
+                    temp.Add("-ALL-")
+                End If
+
                 dr.Close()
 
             Catch ex As Exception
@@ -228,9 +232,9 @@ Public Class SkillMatrixClass
                 End While
 
                 dr.Close()
-                If temp.Count > 1 Then
-                    temp.Add("-ALL-")
-                End If
+                'If temp.Count > 1 Then
+                '    temp.Add("-ALL-")
+                'End If
 
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -611,7 +615,7 @@ Public Class SkillMatrixClass
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
             If _seg = 0 Then
-                da = New SqlDataAdapter("  SELECT DISTINCT * FROM [dbo].[vQuery_SMSummaryView] WHERE [TeamId]  IN (SELECT DISTINCT TeamId from vQuery_TeamPull WHERE [Segment] = '" & _dept & "')  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];", Me.gridMainDbConnection)
+                da = New SqlDataAdapter("  SELECT DISTINCT * FROM [dbo].[vQuery_SMSummaryView] WHERE [TeamId]  IN (SELECT DISTINCT TeamId from vQuery_TeamPull )  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];", Me.gridMainDbConnection)
             Else
                 Dim sql As String = "  SELECT DISTINCT * FROM [dbo].[vQuery_SMSummaryView] WHERE [TeamId]= " & _seg & "  AND ( " & ChannelParam & " OR " & ChannelPrioParam & " ) AND  (" & CoreBizParam & ") AND  (" & HomeSkillParam & ") ORDER BY [Name];"
                 da = New SqlDataAdapter(sql, Me.gridMainDbConnection)
@@ -675,7 +679,12 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_CoreFunctionLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            If Not IsNothing(_temp) Then
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_CoreFunctionLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_CoreFunctionLog] ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            End If
+
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -692,7 +701,13 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_HomeSkillLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            If Not IsNothing(_temp) Then
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_HomeSkillLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_HomeSkillLog] ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            End If
+
+
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -709,7 +724,13 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_ChannelLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            If Not IsNothing(_temp) Then
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_ChannelLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_ChannelLog] ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            End If
+
+
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -726,7 +747,15 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT DISTINCT * FROM [dbo].[vQuery_SkillPreferenceLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+
+            If Not IsNothing(_temp) Then
+                da = New SqlDataAdapter("SELECT DISTINCT * FROM [dbo].[vQuery_SkillPreferenceLog] WHERE [TeamID]=" & _temp & " ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT DISTINCT * FROM [dbo].[vQuery_SkillPreferenceLog]  ORDER BY [ModifiedDate] DESC;", Me.gridMainDbConnection)
+            End If
+
+
+
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -737,6 +766,7 @@ Public Class SkillMatrixClass
 
         If Not IsNothing(temp) Then
             Dim dt = Me.GetSkillInfo() 'skill names
+
             Dim dt2 = Me.GetSPTeamLogInfo(_temp)
             If dt.Rows.Count > 0 Then
                 For i = 0 To dt.Rows.Count - 1
@@ -896,6 +926,7 @@ Public Class SkillMatrixClass
                     temp.Cases = If(IsDBNull(dr.Item("Cases")), 0, dr.Item("Cases"))
                     temp.Cases = If(IsDBNull(dr.Item("BackOffice")), 0, dr.Item("BackOffice"))
 
+                    temp.RouterPrio = If(IsDBNull(dr.Item("RouterPrio")), "", dr.Item("RouterPrio"))
                     temp.PhonePrio = If(IsDBNull(dr.Item("PhonePrio")), "", dr.Item("PhonePrio"))
                     temp.CasesEmailPrio = If(IsDBNull(dr.Item("CasesEmailPrio")), "", dr.Item("CasesEmailPrio"))
                     temp.BackOfficePrio = If(IsDBNull(dr.Item("BackOfficePrio")), "", dr.Item("BackOfficePrio"))
@@ -1000,7 +1031,12 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefView] WHERE [TeamId]=" & _seg & " ORDER BY [EmpNo];", Me.gridMainDbConnection)
+            If _seg <> 0 Then
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefView] WHERE [TeamId]=" & _seg & " ORDER BY [EmpNo];", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefView] ORDER BY [EmpNo];", Me.gridMainDbConnection)
+            End If
+
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -1035,7 +1071,31 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefLogView] WHERE [TeamId]=" & _temp & ";", Me.gridMainDbConnection)
+            If Not IsNothing(_temp) Then
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefLogView] WHERE [TeamId]=" & _temp & ";", Me.gridMainDbConnection)
+            Else
+                da = New SqlDataAdapter("SELECT * FROM [dbo].[vQuery_SkillPrefLogView];", Me.gridMainDbConnection)
+            End If
+
+            da.SelectCommand.CommandTimeout = 1000
+            Try
+                da.Fill(temp)
+            Catch ex As Exception
+            End Try
+            Me.CloseMainDbConnection()
+        End If
+
+        Return temp
+    End Function
+
+
+    Public Function GetUserAdmin() As DataTable
+        Dim temp As New DataTable
+
+
+        If OpenMainDbConnection() = True Then
+            Dim da As New SqlDataAdapter()
+            da = New SqlDataAdapter("SELECT  [EID] FROM tblUserInfo WHERE EmpNo IN ('857323', '467235', '9000623' , '744113', '9000622', '9000621', '9000154', '877883');", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)
@@ -1470,7 +1530,7 @@ Public Class SkillMatrixClass
         Return temp
     End Function
 
-    Public Function SaveSPLog(ByVal _temp As SkillPreference) As Boolean
+    Public Function SaveSPLog(ByVal _temp As SkillPreference, _tempDate As DateTime) As Boolean
         Dim temp As Boolean
         If OpenMainDbConnection() Then
             gridMainDbCommand.CommandText = "DELETE FROM [dbo].[tblAMSkillPreference] WHERE [EmpNo]= " & _temp.EmpNo & ";"
@@ -1490,13 +1550,13 @@ Public Class SkillMatrixClass
 
             Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Approved")
 
-            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", Format(Date.Now(), "MM/dd/yyyy hh:mm"))
+            Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewDate", _tempDate)
             Me.gridMainDbCommand.Parameters.AddWithValue("@ReviewBy", Environment.UserName)
 
-            gridMainDbCommand.CommandText = "  INSERT INTO [dbo].[tblAMSkillPreference] ([EmpNo],[IdSkill],[ModifiedBy],[ModifiedDate])
-                                            SELECT [EmpNo],[IdSkill],[ModifiedBy],[ModifiedDate]
-                                            FROM [dbo].[tblAMSkillPreferenceLog]
-                                            WHERE [ModifiedBy]=@ModifiedBy AND [ModifiedDate]=@ModifiedDate AND [EmpNo]=@EmpNo"
+            gridMainDbCommand.CommandText = "  INSERT INTO [dbo].[tblAMSkillPreference] ([EmpNo],[IdSkill],[ModifiedBy],[ModifiedDate])" &
+                                            "SELECT [EmpNo],[IdSkill],[ModifiedBy],[ModifiedDate]" &
+                                            "FROM [dbo].[tblAMSkillPreferenceLog]" &
+                                            "WHERE [ModifiedBy]=@ModifiedBy AND [ModifiedDate]=@ModifiedDate AND [EmpNo]=@EmpNo"
 
 
 
@@ -1704,7 +1764,6 @@ Public Class AgentViewInfo
     Public Property GoV As Boolean
     Public Property Speciality As Boolean
     Public Property HSRouter As Boolean
-
     Public Property SkillPreference As List(Of SkillPreference)
 
 
@@ -1947,6 +2006,8 @@ Public Class ChannelInfo
     Public Property Cases As String
     Public Property BackOfficeProf As String
 
+
+    Public Property RouterPrio As String
     Public Property PhonePrio As String
     Public Property CasesEmailPrio As String
     Public Property BackOfficePrio As String

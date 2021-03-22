@@ -284,9 +284,10 @@
 
 
                     <Grid Grid.Row="1" Name="grdAgentList" Visibility="Visible">
-                        <telerik:RadGridView Name="gvAgents"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" >
- 
-                        </telerik:RadGridView>
+
+                        <telerik:RadGridView Name="gvAgents"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
+
+                        <Button Name="btnExport" Content="Export" Width="50" Height="20" BorderBrush="Red" BorderThickness="1" Background="#FFEA3939" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,10,0" />
                         <Grid.Background>
                             <LinearGradientBrush EndPoint="0.5,1.1" StartPoint="0.5,0">
                                 <GradientStop Color="#990000" Offset="0.1"/>
@@ -349,7 +350,7 @@
                         <!--      TABS      -->
 
 
-                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Visible">
+                        <StackPanel Name="stkCBFunction" Orientation="Vertical" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Order Process" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
                                     <Label.Background>
@@ -920,7 +921,7 @@
 
                         </StackPanel>
 
-                        <StackPanel Name="stkChannel" Orientation="Vertical" Visibility="Collapsed">
+                        <StackPanel Name="stkChannel" Orientation="Vertical" Visibility="Visible">
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Proficiency" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="250" Margin="10,0,0,0">
                                     <Label.Background>
@@ -956,6 +957,44 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
+
+                                <Label Content="Router" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <ComboBox Name="tab3CmbRouterPRIO"  Height="30" Width="100">
+                                    <ComboBoxItem Content="" />
+                                    <ComboBoxItem Content="P1" />
+                                    <ComboBoxItem Content="P2" />
+                                    <ComboBoxItem Content="P3" />
+                                    <ComboBoxItem Content="Exception" />
+                                    <ComboBoxItem Content="System" />
+                                    <ComboBoxItem Content="Project" />
+                                    <ComboBoxItem Content="LOA" />
+                                </ComboBox>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <ComboBox Name="tab3CmbPhone"  Height="30" Width="100" >
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="New"/>
+                                    <ComboBoxItem Content="Emerging"/>
+                                    <ComboBoxItem Content="Stable"/>
+                                    <ComboBoxItem Content="Master"/>
+                                </ComboBox>
+
                                 <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
                                     <Label.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -974,41 +1013,8 @@
                                     <ComboBoxItem Content="Project" />
                                     <ComboBoxItem Content="LOA" />
                                 </ComboBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                <Label Content="Phone" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
-                                    <Label.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#232A2E" Offset="0"/>
-                                            <GradientStop Color="#333" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Label.Background>
-                                </Label>
-                                <ComboBox Name="tab3CmbPhone"  Height="30" Width="100" >
-                                    <ComboBoxItem Content=""/>
-                                    <ComboBoxItem Content="New"/>
-                                    <ComboBoxItem Content="Emerging"/>
-                                    <ComboBoxItem Content="Stable"/>
-                                    <ComboBoxItem Content="Master"/>
-                                </ComboBox>
-                                <Label Content="Case / Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
-                                    <Label.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#232A2E" Offset="0"/>
-                                            <GradientStop Color="#333" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Label.Background>
-                                </Label>
-                                <ComboBox Name="tab3CmbEmailCasePrio"  Height="30" Width="100" >
-                                    <ComboBoxItem Content="" />
-                                    <ComboBoxItem Content="P1" />
-                                    <ComboBoxItem Content="P2" />
-                                    <ComboBoxItem Content="P3" />
-                                    <ComboBoxItem Content="Exception" />
-                                    <ComboBoxItem Content="System" />
-                                    <ComboBoxItem Content="Project" />
-                                    <ComboBoxItem Content="LOA" />
-                                </ComboBox>
+                                
+                                
 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -1028,7 +1034,7 @@
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
 
-                                <Label Content="Back Office" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                <Label Content="Case / Email" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
                                     <Label.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="#232A2E" Offset="0"/>
@@ -1036,7 +1042,7 @@
                                         </LinearGradientBrush>
                                     </Label.Background>
                                 </Label>
-                                <ComboBox Name="tab3CmbBackOfficePrio"  Height="30" Width="100" >
+                                <ComboBox Name="tab3CmbEmailCasePrio"  Height="30" Width="100" >
                                     <ComboBoxItem Content="" />
                                     <ComboBoxItem Content="P1" />
                                     <ComboBoxItem Content="P2" />
@@ -1046,6 +1052,8 @@
                                     <ComboBoxItem Content="Project" />
                                     <ComboBoxItem Content="LOA" />
                                 </ComboBox>
+
+                                
 
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -1064,7 +1072,24 @@
                                     <ComboBoxItem Content="Stable"/>
                                     <ComboBoxItem Content="Master"/>
                                 </ComboBox>
-
+                                <Label Content="Back Office" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,0,10,0">
+                                    <Label.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#232A2E" Offset="0"/>
+                                            <GradientStop Color="#333" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Label.Background>
+                                </Label>
+                                <ComboBox Name="tab3CmbBackOfficePrio"  Height="30" Width="100" >
+                                    <ComboBoxItem Content="" />
+                                    <ComboBoxItem Content="P1" />
+                                    <ComboBoxItem Content="P2" />
+                                    <ComboBoxItem Content="P3" />
+                                    <ComboBoxItem Content="Exception" />
+                                    <ComboBoxItem Content="System" />
+                                    <ComboBoxItem Content="Project" />
+                                    <ComboBoxItem Content="LOA" />
+                                </ComboBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <Label Content="Back Office" Foreground="#FFF5F3E7" HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="#232A2E" Height="30" Width="140" Margin="10,-15,10,0">

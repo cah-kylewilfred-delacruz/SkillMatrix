@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkillMatrix"
         mc:Ignorable="d"
-        Title="frmSummary"  WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="ThreeDBorderWindow" Width="1200" Height="800" MinHeight="700" MinWidth="1200" WindowState="Maximized" Background="#FFF5F3E7">
+        Title="Skill Matrix Summary"  WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowStyle="ThreeDBorderWindow" Width="1200" Height="800" MinHeight="700" MinWidth="1200" WindowState="Maximized" Background="#FFF5F3E7">
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -110,6 +110,7 @@
                                                     <CheckBox Name="chkPhonePrio" Content="Phone" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                     <CheckBox Name="chkCasesEmailPrio" Content="Cases/Email" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                     <CheckBox Name="chkBackOfficePrio" Content="Back Office" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
+                                                    <CheckBox Name="chkCHRouterPrio" Content="Router" Foreground="White"  BorderBrush="Red"    HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="100" Margin="5,0" FontSize="12" />
                                                 </StackPanel>
 
                                             </StackPanel>
@@ -269,11 +270,18 @@
                     </Grid>
 
                 </Grid>
-                <telerik:RadGridView Grid.Row="2" Foreground="White" Background="#232A2E"  Name="gvFiltered" Margin="2,5,5,10" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"   >
+                <Grid Grid.Row="2">
+                    
+                    
+                    <telerik:RadGridView  Foreground="White" Background="#232A2E"  Name="gvFiltered" Margin="2,5,5,10" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E" AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3"   />
+                     
+                    <Button Name="btnExport" Content="Export" Width="50" Height="20" BorderBrush="Red" BorderThickness="1" Background="#FFEA3939" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,10,0" />
+                </Grid>
+                
 
-    
 
-                </telerik:RadGridView>
+
+
             </Grid>
 
 
