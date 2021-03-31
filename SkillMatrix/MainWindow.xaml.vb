@@ -120,7 +120,7 @@ Class MainWindow
                 admin = 1
             End If
         Next
-        admin = 0
+
         Cutoff()
     End Sub
 
@@ -174,6 +174,7 @@ Class MainWindow
 
     Private Sub load()
         gvAgents.ItemsSource = sm.GetAgentInfo(cmbTower.Text, cmbDept.Text, cmbSegment.SelectedValue, cmbSegment.Text).DefaultView
+        lblTotal.Content = "Total : " & gvAgents.Items.Count
         gvAgents.Columns("EmpNo").IsVisible = False
         gvAgents.Columns("Domestic").IsVisible = False
         gvAgents.Columns("TeamId").IsVisible = False
@@ -586,6 +587,7 @@ Class MainWindow
             tab1CmbSPO.SelectedIndex = cf.SpecialProcessOrders
             tab1CmbResearch.SelectedIndex = cf.Research
             cmbVLTrained.SelectedIndex = cf.ValueLinkTrained
+            cmbXiPay.SelectedIndex = cf.Xipay
             tab1TxtComment.Text = cf.Comment
             lblPrimarySkill.Content = cf.PrimarySkill
 
@@ -696,7 +698,8 @@ Class MainWindow
         Dim tempCH = New ChannelInfo
         Dim tempSP = New List(Of SkillPreference)
         Dim _EmpNo = agentLst.Item("EmpNo")
-
+        Dim date1 As New DateTime
+        date1 = Format(Date.Now(), "MM/dd/yyyy hh:mm")
         'Try
 
         'Catch ex As Exception
@@ -723,7 +726,7 @@ Class MainWindow
             tempCF.Research = tab1CmbResearch.SelectedIndex
             tempCF.PrimarySkill = lblPrimarySkill.Content
             tempCF.ValueLinkTrained = cmbVLTrained.SelectedIndex
-            tempCF.Xipay = cmbXiPay.SelectedIndex
+            tempCF.Xipay = If(cmbXiPay.SelectedIndex = 1, 1, 0)
 
             tempCF.Comment = tab1TxtComment.Text
 
@@ -795,7 +798,7 @@ Class MainWindow
                 stkSpecSkill.Visibility = Visibility.Hidden
 
             Else
-                MsgBox("FailedSaving Saving Channel")
+                MsgBox("Failed Saving Channel")
             End If
 
 
@@ -1031,7 +1034,7 @@ Class MainWindow
                 Next
             End If
 
-            SP = sm.SaveSPInfo(lstSkillId, agentLst.Item("EmpNo"))
+            SP = sm.SaveSPInfo(lstSkillId, agentLst.Item("EmpNo"), date1)
             If SP Then
                 MsgBox("Sucess Saving Skill Preference")
 
@@ -1572,6 +1575,7 @@ Class MainWindow
                     n += 1
                 End If
             Next
+
             Dim str As String
             If n > 1 Then
                 str = " Items"
@@ -1623,7 +1627,6 @@ Class MainWindow
                 tempHS.CHI = obj.Item("CHI")
                 tempHS.Commercial = obj.Item("Commercial")
                 tempHS.Concierge = obj.Item("Concierge")
-                tempHS.Commercial = obj.Item("Commercial")
                 tempHS.DCS = obj.Item("DCS")
                 tempHS.GOV = obj.Item("GOV")
                 tempHS.IDNC = obj.Item("IDNC")
@@ -1647,9 +1650,9 @@ Class MainWindow
 
             Dim str As String
             If n > 1 Then
-                str = " Item"
-            Else
                 str = " Items"
+            Else
+                str = " Item"
             End If
 
             'drHS = gvHSLogs.SelectedItem
@@ -1657,7 +1660,7 @@ Class MainWindow
 
             'If HS Then
             MsgBox(n & str & " Approved", MsgBoxStyle.Information, "Info")
-            gvHSLogs.ItemsSource = sm.GetCHLog(cmbSegment.SelectedValue).DefaultView
+            gvHSLogs.ItemsSource = sm.GetHSLog(cmbSegment.SelectedValue).DefaultView
 
             a = 0
             b = 0

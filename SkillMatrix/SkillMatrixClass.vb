@@ -1273,7 +1273,7 @@ Public Class SkillMatrixClass
 
         Return temp
     End Function
-    Public Function SaveSPInfo(ByRef _temp As List(Of Integer), ByVal _EmpNo As String) As Boolean
+    Public Function SaveSPInfo(ByRef _temp As List(Of Integer), ByVal _EmpNo As String, _tempDate As DateTime) As Boolean
         Dim temp As Boolean
         If OpenMainDbConnection() Then
 
@@ -1284,7 +1284,7 @@ Public Class SkillMatrixClass
                 Me.gridMainDbCommand.Parameters.AddWithValue("@EmpNo", _EmpNo)
                 Me.gridMainDbCommand.Parameters.AddWithValue("@IdSkill", itm)
 
-                Me.gridMainDbCommand.Parameters.AddWithValue("@ModifiedDate", Now.ToString)
+                Me.gridMainDbCommand.Parameters.AddWithValue("@ModifiedDate", _tempDate)
                 Me.gridMainDbCommand.Parameters.AddWithValue("@ModifiedBy", Environment.UserName)
 
                 Me.gridMainDbCommand.Parameters.AddWithValue("@Action", "Pending")
