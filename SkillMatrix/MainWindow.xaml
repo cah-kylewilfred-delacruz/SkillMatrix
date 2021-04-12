@@ -287,7 +287,7 @@
 
                     <Grid Grid.Row="1" Name="grdAgentList" Visibility="Visible">
 
-                        <telerik:RadGridView Name="gvAgents"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Single" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
+                        <telerik:RadGridView Name="gvAgents"  Background="#232A2E" Foreground="WhiteSmoke" telerik:StyleManager.Theme="Expression_Dark" AlternateRowBackground="#232A2E"  Margin="5,5" Height="Auto" Width="Auto"  IsReadOnly="True" IsEnabled="True" ShowGroupPanel="False" SelectionMode="Multiple" ItemsSource="{Binding}" AutoExpandGroups="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" ShowSearchPanel="True"  SearchPanelForeground="White"  BorderBrush="Gray" BorderThickness="1"  AlternationCount="2" RowHeight="25" FontSize="12" Grid.ColumnSpan="1" GroupPanelForeground="#FFD1D1D1" GroupPanelBackground="#FF4271C3" FontFamily="seogi UI" />
 
                         <Button Name="btnExport" Content="Export" Width="50" Height="20" BorderBrush="Red" BorderThickness="1" Background="#FFEA3939" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,11,10,0" />
                         <Grid.Background>
@@ -314,7 +314,7 @@
 
             <!--EDIT MENU-->
 
-            <Grid Name="grdEdit" Grid.Column="2" Visibility="Visible">
+            <Grid Name="grdEdit" Grid.Column="2" Visibility="Hidden">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="*"/>

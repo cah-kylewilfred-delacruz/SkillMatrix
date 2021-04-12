@@ -1088,6 +1088,26 @@ Public Class SkillMatrixClass
         Return temp
     End Function
 
+    Public Function GetEmpNameList(ByVal _temp As String) As DataTable
+        Dim temp As New DataTable
+
+
+        If OpenMainDbConnection() = True Then
+            Dim da As New SqlDataAdapter()
+
+            da = New SqlDataAdapter("SELECT [EmpNo],[EmpName] FROM [dbo].[tblUserInfo] WHERE [EmpNo] IN " & _temp & ";", Me.gridMainDbConnection)
+
+            da.SelectCommand.CommandTimeout = 1000
+            Try
+                da.Fill(temp)
+            Catch ex As Exception
+            End Try
+            Me.CloseMainDbConnection()
+        End If
+
+        Return temp
+    End Function
+
 
     Public Function GetUserAdmin() As DataTable
         Dim temp As New DataTable
@@ -1095,7 +1115,7 @@ Public Class SkillMatrixClass
 
         If OpenMainDbConnection() = True Then
             Dim da As New SqlDataAdapter()
-            da = New SqlDataAdapter("SELECT  [EID] FROM tblUserInfo WHERE EmpNo IN ('857323', '467235', '9000623' , '744113', '9000622', '9000621', '9000154', '877883');", Me.gridMainDbConnection)
+            da = New SqlDataAdapter("SELECT  [EID] FROM tblAMAdmin;", Me.gridMainDbConnection)
             da.SelectCommand.CommandTimeout = 1000
             Try
                 da.Fill(temp)

@@ -118,6 +118,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="frmChangePrimary.xaml.vb">
+      <DependentUpon>frmChangePrimary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="frmEditSkill.xaml.vb">
+      <DependentUpon>frmEditSkill.xaml</DependentUpon>
+    </Compile>
     <Compile Include="frmSummary.xaml.vb">
       <DependentUpon>frmSummary.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,14 @@
     <Compile Include="Window2.xaml.vb">
       <DependentUpon>Window2.xaml</DependentUpon>
     </Compile>
+    <Page Include="frmChangePrimary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="frmEditSkill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="frmSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

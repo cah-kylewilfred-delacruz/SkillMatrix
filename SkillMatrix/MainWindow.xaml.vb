@@ -163,10 +163,27 @@ Class MainWindow
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As RoutedEventArgs) Handles btnEdit.Click
+        Dim lstEmp As New List(Of String)
+        For Each itm In gvAgents.SelectedItems
+            lstEmp.Add(itm.item("EmpNo"))
+        Next
+
+        Dim frm As New frmEditSkill(lstEmp) 'cmbSegment.SelectedValue)
+
+
         If cOff <> 0 Then
-            gvEdit()
+            If gvAgents.SelectedItems.Count > 1 Then
+                frm.ShowDialog()
+            Else
+                gvEdit()
+            End If
+
         ElseIf admin Then
-            gvEdit()
+            If gvAgents.SelectedItems.Count > 1 Then
+                frm.ShowDialog()
+            Else
+                gvEdit()
+            End If
         Else
             MsgBox("Modification of the Agent's skill is Sunday to Wednesday only.", vbInformation, "SkillMatrix")
         End If
@@ -463,10 +480,27 @@ Class MainWindow
     End Sub
 
     Private Sub gvAgents_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles gvAgents.MouseDoubleClick
+        Dim lstEmp As New List(Of String)
+        For Each itm In gvAgents.SelectedItems
+            lstEmp.Add(itm.item("EmpNo"))
+        Next
+
+        Dim frm As New frmEditSkill(lstEmp) 'cmbSegment.SelectedValue)
+
+
         If cOff <> 0 Then
-            gvEdit()
+            If gvAgents.SelectedItems.Count > 1 Then
+                frm.ShowDialog()
+            Else
+                gvEdit()
+            End If
+
         ElseIf admin Then
-            gvEdit()
+            If gvAgents.SelectedItems.Count > 1 Then
+                frm.ShowDialog()
+            Else
+                gvEdit()
+            End If
         Else
             MsgBox("Modification of the Agent's skill is Sunday to Wednesday only.", vbInformation, "SkillMatrix")
         End If
@@ -848,191 +882,7 @@ Class MainWindow
             End If
 
         ElseIf d Then
-            Dim lstSkillId As New List(Of Integer)
-
-
-            If tab2ChkBackOffice.IsChecked Then
-                For Each itm In lstBO.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-
-
-            If tab2ChkCHI.IsChecked Then
-                For Each itm In lstCHI.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-            If tab2ChkCommercial.IsChecked Then
-                For Each itm In lstComm.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-            If tab2ChkConcierge.IsChecked Then
-                For Each itm In lstConcierge.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-            If tab2ChkDCS.IsChecked Then
-                For Each itm In lstDCS.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-            If tab2ChkGOV.IsChecked Then
-                For Each itm In lstGov.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-            If tab2ChkIDNC.IsChecked Then
-                For Each itm In lstIDNC.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-
-
-            If tab2ChkKaiser.IsChecked Then
-                For Each itm In lstKaiser.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-            If tab2ChkRouter.IsChecked Then
-                For Each itm In lstRouter.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-
-
-            If tab2ChkSalesSupport.IsChecked Then
-                For Each itm In lstSalesSupport.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-            If tab2ChkSpecialty.IsChecked Then
-                For Each itm In lstSpecialty.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-            If tab2ChkTradex.IsChecked Then
-                For Each itm In lstTradex.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-            If tab2ChkSupplyAssurance.IsChecked Then
-                For Each itm In lstSupplyAssurance.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
-
-            If tab2ChkCET.IsChecked Then
-                For Each itm In lstCET.Items
-
-                    Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
-                    If Not IsNothing(cb) Then
-                        If cb.IsChecked Then
-                            lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
-                        End If
-                    End If
-
-                Next
-            End If
+            Dim lstSkillId As List(Of Integer) = SkillId()
 
             SP = sm.SaveSPInfo(lstSkillId, agentLst.Item("EmpNo"), date1)
             If SP Then
@@ -1049,6 +899,193 @@ Class MainWindow
         End If
     End Sub
 
+    Private Function SkillId() As List(Of Integer)
+        Dim lstSkillId As New List(Of Integer)
+
+
+        If tab2ChkBackOffice.IsChecked Then
+            For Each itm In lstBO.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+
+
+        If tab2ChkCHI.IsChecked Then
+            For Each itm In lstCHI.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+        If tab2ChkCommercial.IsChecked Then
+            For Each itm In lstComm.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+        If tab2ChkConcierge.IsChecked Then
+            For Each itm In lstConcierge.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+        If tab2ChkDCS.IsChecked Then
+            For Each itm In lstDCS.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+        If tab2ChkGOV.IsChecked Then
+            For Each itm In lstGov.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+        If tab2ChkIDNC.IsChecked Then
+            For Each itm In lstIDNC.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+
+
+        If tab2ChkKaiser.IsChecked Then
+            For Each itm In lstKaiser.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+        If tab2ChkRouter.IsChecked Then
+            For Each itm In lstRouter.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+
+
+        If tab2ChkSalesSupport.IsChecked Then
+            For Each itm In lstSalesSupport.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+        If tab2ChkSpecialty.IsChecked Then
+            For Each itm In lstSpecialty.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+        If tab2ChkTradex.IsChecked Then
+            For Each itm In lstTradex.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+        If tab2ChkSupplyAssurance.IsChecked Then
+            For Each itm In lstSupplyAssurance.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+
+        If tab2ChkCET.IsChecked Then
+            For Each itm In lstCET.Items
+
+                Dim cb As System.Windows.Controls.CheckBox = Me.FindName(itm.Name)
+                If Not IsNothing(cb) Then
+                    If cb.IsChecked Then
+                        lstSkillId.Add(CType(itm.Name.ToString.Substring(2), Integer))
+                    End If
+                End If
+
+            Next
+        End If
+    End Function
 
     Private Sub btnLogs_Click(sender As Object, e As RoutedEventArgs) Handles btnLogs.Click
         'Dim agentlst
