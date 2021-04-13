@@ -2,11 +2,12 @@
 
 Public Class frmChangePrimary
     Dim pschk As New DataTable
-    Public Sub New(ByVal _temp As DataTable)
+    Dim str1 As String
+    Public Sub New(ByVal _temp As DataTable, ByVal _str As String)
 
         ' This call is required by the designer.
         InitializeComponent()
-
+        str1 = _str
         ' Add any initialization after the InitializeComponent() call.
         pschk = _temp
         lstPrimarySkill.Items.Clear()
@@ -67,6 +68,7 @@ Public Class frmChangePrimary
     End Sub
 
     Private Sub btnCncl_Click(sender As Object, e As RoutedEventArgs) Handles btnCncl.Click
+        lblPrimarySkill.Content = str1
         Close()
     End Sub
 End Class
